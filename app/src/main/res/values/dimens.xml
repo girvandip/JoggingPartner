@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fragment_margin">10dp</dimen>
+    <dimen name="listitem_padding">6dp</dimen>
 </resources>
