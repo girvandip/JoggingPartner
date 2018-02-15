@@ -1,79 +1,35 @@
 {
   "project_info": {
-    "project_number": "630801818329",
-    "firebase_url": "https://joggingpartner-8d70a.firebaseio.com",
-    "project_id": "joggingpartner-8d70a",
-    "storage_bucket": "joggingpartner-8d70a.appspot.com"
+    "project_number": "82905626474",
+    "firebase_url": "https://android-544df.firebaseio.com",
+    "project_id": "android-544df",
+    "storage_bucket": "android-544df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:630801818329:android:6e4c28ec73b8f262",
-        "android_client_info": {
-          "package_name": "com.example.android.joggingpartner"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "630801818329-td4r9o99pvqns5atcqf9a6sverd9b1ld.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.android.joggingpartner",
-            "certificate_hash": "ecd52edc2e1ce62aa47a30a454c3c31cba212b02"
-          }
-        },
-        {
-          "client_id": "630801818329-as2odblcr4acmp8cmhsstnhtg4273pvd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCUwoTIcWlBsFLpxReHl-_vinmYHMRfrzM"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "630801818329-as2odblcr4acmp8cmhsstnhtg4273pvd.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:630801818329:android:91f00bf54fded4f8",
+        "mobilesdk_app_id": "1:82905626474:android:91f00bf54fded4f8",
         "android_client_info": {
           "package_name": "com.example.batere3a.joggingpartner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "630801818329-i9oe0udi075c0qrvg6iu05931jfmikh6.apps.googleusercontent.com",
+          "client_id": "82905626474-jc04b9rqtjjbe7m1o0qs0n80nalmuro3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.batere3a.joggingpartner",
-            "certificate_hash": "d58e3b59f4aa691975a28d8192f308fb76d9ffba"
+            "certificate_hash": "ecd52edc2e1ce62aa47a30a454c3c31cba212b02"
           }
         },
         {
-          "client_id": "630801818329-as2odblcr4acmp8cmhsstnhtg4273pvd.apps.googleusercontent.com",
+          "client_id": "82905626474-5kc9d9iet7m03m9aakfev0db8ms97mk8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCUwoTIcWlBsFLpxReHl-_vinmYHMRfrzM"
+          "current_key": "AIzaSyAsZ6TVq3mzcn01a4Jehm_ZM7yZw_Ixiew"
         }
       ],
       "services": {
@@ -84,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "630801818329-as2odblcr4acmp8cmhsstnhtg4273pvd.apps.googleusercontent.com",
+              "client_id": "82905626474-5kc9d9iet7m03m9aakfev0db8ms97mk8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

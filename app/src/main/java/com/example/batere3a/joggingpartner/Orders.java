@@ -70,7 +70,7 @@ public class Orders extends Fragment {
         }
 
         // Firebase write test
-        myRef.setValue("Hello, World!");
+        myRef.setValue("Aldrich");
     }
 
 
