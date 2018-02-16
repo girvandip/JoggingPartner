@@ -21,6 +21,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new Orders();
             case 1:
+                return new OpenOrder();
+            case 2:
                 return new History();
             default:
                 return null;

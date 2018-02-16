@@ -4,4 +4,6 @@
 
     <string name="orders">Orders</string>
     <string name="history">History</string>
+    <string name="openorder">Open Order</string>
+
 </resources>

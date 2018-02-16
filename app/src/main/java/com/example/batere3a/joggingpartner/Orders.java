@@ -2,7 +2,9 @@ package com.example.batere3a.joggingpartner;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,39 +40,16 @@ public class Orders extends Fragment {
 
     protected LayoutManagerType mCurrentLayoutManagerType;
 
-    // Firebase database
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Users");
-
 
     public Orders() {
         // Pull data from database
         mWordList = new LinkedList<>();
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
 
         // initiate linked list
         for(int i = 0; i < 10; i++){
             mWordList.addLast("ini i = " + i);
         }
 
-        // Firebase write test
-        myRef.setValue("Aldrich");
     }
 
 
@@ -119,6 +98,12 @@ public class Orders extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(scrollPosition);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Order");
     }
 
 }

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,19 +36,21 @@ public class MainActivity extends AppCompatActivity {
         // Create an instance of the tab layout from the view.
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         // Set the text for each tab.
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.orders));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.history));
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.orders).setIcon(R.drawable.my_orders));
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.openorder).setIcon(R.drawable.openorder));
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.history).setIcon(R.drawable.history));
         // Set the tabs to fill the entire layout.
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Using PagerAdapter to manage page views in fragments.
         // Each page is represented by its own fragment.
-        // This is another example of the adapter pattern.
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        // Setting a listener for clicks.
 
         // Setting a listener for clicks.
         viewPager.addOnPageChangeListener(new
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                ((Toolbar) findViewById(R.id.toolbar)).setTitle(tab.getText());
             }
 
             @Override
