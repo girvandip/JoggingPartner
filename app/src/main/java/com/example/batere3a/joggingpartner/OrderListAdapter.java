@@ -45,7 +45,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
         public OrderViewHolder(View itemView, OrderListAdapter adapter) {
             super(itemView);
-            orderItemView = (TextView) itemView.findViewById(R.id.order);
+            orderItemView = (TextView) itemView.findViewById(R.id.partner_name);
             this.mAdapter = adapter;
         }
     }

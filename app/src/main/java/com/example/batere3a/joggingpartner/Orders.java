@@ -46,8 +46,8 @@ public class Orders extends Fragment {
         mWordList = new LinkedList<>();
 
         // initiate linked list
-        for(int i = 0; i < 10; i++){
-            mWordList.addLast("ini i = " + i);
+        for(int i = 0; i < 5; i++){
+            mWordList.addLast("123456789012" + i);
         }
 
     }
