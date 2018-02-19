@@ -16,4 +16,15 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_maps">Map</string>
+    <string name="locationSearchHint">Search your location here</string>
+    <string name="locationSearchButton">Search</string>
+    <string name="goToMapText">Map</string>
+    <string name="goToMakeOrderButtonText">Done</string>
+    <string name="datePickerHint">Date not added</string>
+    <string name="timePickerHint">Time not added</string>
+    <string name="date_picker">datePicker</string>
+    <string name="time_picker">timePicker</string>
+    <string name="mapPickerHint">Pick your location</string>
+    <string name="addressHint">This is your address</string>
 </resources>
