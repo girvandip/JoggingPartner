@@ -1,11 +1,13 @@
 package com.example.batere3a.joggingpartner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -24,6 +26,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     public OrderListAdapter.OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.orderlist_item, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),
+                        "you click on an order", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext() , OrderDetails.class);
+                view.getContext().startActivity(intent);
+            }
+        });
         return new OrderViewHolder(view, this);
     }
 
