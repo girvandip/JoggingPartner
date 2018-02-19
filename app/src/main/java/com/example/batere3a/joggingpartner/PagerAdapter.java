@@ -10,9 +10,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
+
     public PagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return null;
     }
 
     @Override
@@ -33,4 +39,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return numOfTabs;
     }
+
+
 }
