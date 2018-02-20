@@ -1,9 +1,7 @@
 package com.example.batere3a.joggingpartner;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +26,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             JSONObject orderData = new JSONObject(data);
             JSONArray names = orderData.names();
             orderDataArray = orderData.toJSONArray(names);
+            for (int i = 0; i < orderDataArray.length(); i++) {
+                if (((JSONObject) orderDataArray.get(i))
+                        .getString("status")
+                        .equals("completed")) {
+                    orderDataArray.remove(i);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +49,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             public void onClick(View view) {
                 Toast.makeText(view.getContext(),
                         "you click on an order", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext() , OrderDetails.class);
+                Intent intent = new Intent(view.getContext(), OrderDetails.class);
                 // TODO: intent put extra data
                 view.getContext().startActivity(intent);
             }
@@ -55,16 +60,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     @Override
     public void onBindViewHolder(OrderListAdapter.OrderViewHolder holder, int position) {
         try {
-            holder.order = (JSONObject) orderDataArray.get(position);
+            JSONObject temp = (JSONObject) orderDataArray.get(position);
 
-            // test
-            holder.orderItemView.setText(holder.order.getString("runner"));
+            holder.partnerName.setText(temp.getString("runner"));
+
+            String dateTime = temp.getString("date")
+                    + " " + temp.getString("time");
+            holder.orderTime.setText(dateTime);
+
+            holder.joggingPlace.setText(temp.getString("address"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //String current = mWordList.get(position);
-        //holder.orderItemView.setText(current);
     }
 
     @Override
@@ -73,13 +80,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder {
-        public final TextView orderItemView;
-        public JSONObject order;
+        public final TextView partnerName;
+        public final TextView orderTime;
+        public final TextView joggingPlace;
         final OrderListAdapter mAdapter;
 
         public OrderViewHolder(View itemView, OrderListAdapter adapter) {
             super(itemView);
-            orderItemView = (TextView) itemView.findViewById(R.id.partner_name);
+            partnerName = (TextView) itemView.findViewById(R.id.partner_name);
+            orderTime = (TextView) itemView.findViewById(R.id.order_time);
+            joggingPlace = (TextView) itemView.findViewById(R.id.jogging_place);
             this.mAdapter = adapter;
         }
     }
