@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 
 import static android.content.ContentValues.TAG;
@@ -47,7 +49,7 @@ public class Orders extends Fragment {
 
         // initiate linked list
         for(int i = 0; i < 5; i++){
-            mWordList.addLast("123456789012" + i);
+            mWordList.addLast("" + i);
         }
 
     }
@@ -66,7 +68,8 @@ public class Orders extends Fragment {
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        orderListAdapter = new OrderListAdapter(mWordList);
+        // initialize the adapter with data from bundle
+        orderListAdapter = new OrderListAdapter(mWordList, getArguments().getString("data"));
         recyclerView.setAdapter(orderListAdapter);
 
         // Inflate the layout for this fragment

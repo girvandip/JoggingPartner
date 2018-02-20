@@ -32,6 +32,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://android-544df.firebaseio.com/";
+    private String userData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         FetchData users = new FetchData("Orders", "GET", result);
         users.execute();
         try {
-            Log.d("data", users.get());
+            userData = users.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         // Each page is represented by its own fragment.
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+                (getSupportFragmentManager(), tabLayout.getTabCount(), userData);
         viewPager.setAdapter(adapter);
 
         // Setting a listener for clicks.

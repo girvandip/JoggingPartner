@@ -1,5 +1,6 @@
 package com.example.batere3a.joggingpartner;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,10 +11,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
+    String data;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs) {
+    public PagerAdapter(FragmentManager fm, int numOfTabs, String data) {
         super(fm);
         this.numOfTabs = numOfTabs;
+        this.data = data;
     }
 
     @Override
@@ -23,9 +26,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("data", data);
         switch(position){
             case 0:
-                return new Orders();
+                Orders orders = new Orders();
+                orders.setArguments(bundle);
+                return orders;
             case 1:
                 return new OpenOrder();
             case 2:

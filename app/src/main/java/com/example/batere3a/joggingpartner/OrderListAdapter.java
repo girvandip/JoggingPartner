@@ -3,11 +3,15 @@ package com.example.batere3a.joggingpartner;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 
@@ -17,8 +21,17 @@ import java.util.LinkedList;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
     private final LinkedList<String> mWordList;
+    private JSONArray orderDataArray = null;
 
-    public OrderListAdapter(LinkedList<String> orderList) {
+    public OrderListAdapter(LinkedList<String> orderList, String data) {
+        try {
+            JSONObject orderData = new JSONObject(data);
+            JSONArray names = orderData.names();
+            orderDataArray = orderData.toJSONArray(names);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         this.mWordList = orderList;
     }
 
@@ -41,18 +54,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
     @Override
     public void onBindViewHolder(OrderListAdapter.OrderViewHolder holder, int position) {
-        // TODO: check the bind variables to output order data
-        String current = mWordList.get(position);
-        holder.orderItemView.setText(current);
+        try {
+            holder.order = (JSONObject) orderDataArray.get(position);
+
+            // test
+            holder.orderItemView.setText(holder.order.getString("runner"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //String current = mWordList.get(position);
+        //holder.orderItemView.setText(current);
     }
 
     @Override
     public int getItemCount() {
-        return mWordList.size();
+        return orderDataArray.length();
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder {
         public final TextView orderItemView;
+        public JSONObject order;
         final OrderListAdapter mAdapter;
 
         public OrderViewHolder(View itemView, OrderListAdapter adapter) {
