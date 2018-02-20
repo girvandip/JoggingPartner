@@ -84,8 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/editText8"
-        android:layout_alignStart="@+id/editText8"
+        android:layout_alignLeft="@+id/editText10"
+        android:layout_alignStart="@+id/editText10"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -98,7 +98,7 @@
         android:layout_alignLeft="@+id/button4"
         android:layout_alignStart="@+id/button4"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="phone" />
 
     <Button
         android:id="@+id/button4"
