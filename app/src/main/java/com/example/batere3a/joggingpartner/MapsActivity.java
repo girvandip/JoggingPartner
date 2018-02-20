@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -17,7 +18,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityEventSource;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -56,7 +60,8 @@ import com.example.batere3a.joggingpartner.models.PlaceInfo;
  */
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener, Drawable.Callback, KeyEvent.Callback,
+        AccessibilityEventSource {
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -287,7 +292,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this,
                 permissions,
                 LOCATION_PERMISSION_REQUEST_CODE);
-    }
+        }
     }
 
     @Override
@@ -381,4 +386,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             places.release();
         }
     };
+
+    @Override
+    public void invalidateDrawable(@NonNull Drawable drawable) {
+
+    }
+
+    @Override
+    public void scheduleDrawable(@NonNull Drawable drawable, @NonNull Runnable runnable, long l) {
+
+    }
+
+    @Override
+    public void unscheduleDrawable(@NonNull Drawable drawable, @NonNull Runnable runnable) {
+
+    }
+
+    @Override
+    public void sendAccessibilityEvent(int i) {
+
+    }
+
+    @Override
+    public void sendAccessibilityEventUnchecked(AccessibilityEvent accessibilityEvent) {
+
+    }
 }
