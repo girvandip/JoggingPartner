@@ -123,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
             mAuth.signOut();
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
         } else if (id == R.id.action_profile) {
-            //Fill with Edit Profile Activity
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
