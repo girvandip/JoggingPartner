@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private Button mLogoutBtn;
+    private Button mMakeOrder;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
+
+        mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken(getString(R.string.default_web_client_id))
@@ -68,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 Auth.GoogleSignInApi.signOut(mGoogleApiClient);
             }
         });
+
+        mMakeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent
+                        (MainActivity.this, MakeOrderActivity.class));
+            }
+        });
+
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
