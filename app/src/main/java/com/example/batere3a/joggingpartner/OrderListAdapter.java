@@ -32,6 +32,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
                 Toast.makeText(view.getContext(),
                         "you click on an order", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext() , OrderDetails.class);
+                // TODO: intent put extra data
                 view.getContext().startActivity(intent);
             }
         });
