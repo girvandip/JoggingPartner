@@ -1,5 +1,6 @@
 package com.example.batere3a.joggingpartner;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,10 +16,22 @@ import android.widget.TextView;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
 
+import com.example.batere3a.joggingpartner.database.FirebaseConnector;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.concurrent.Callable;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String BASE_URL = "https://android-544df.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        TextView result = findViewById(R.id.result);
+        FetchData users = new FetchData("Orders", "GET", result);
+        users.execute();
+        try {
+            Log.d("data", users.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         // Create an instance of the tab layout from the view.
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
