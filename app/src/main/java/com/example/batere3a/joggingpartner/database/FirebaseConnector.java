@@ -1,4 +1,4 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.database;
 
 import android.net.Uri;
 import android.os.AsyncTask;

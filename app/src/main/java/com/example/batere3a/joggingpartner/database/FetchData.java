@@ -1,8 +1,6 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.database;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONObject;
