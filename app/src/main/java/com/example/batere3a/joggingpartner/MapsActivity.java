@@ -173,14 +173,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundleMakeOrder = getIntent().getParcelableExtra("bundleMakeOrder");
                 if (mLatlng != null && mLocationName != null) {
                     Bundle args = new Bundle();
                     args.putParcelable("latLngLocation", mLatlng);
                     args.putString("locationName", mLocationName);
                     args.putString("addressName", mAddressName);
+                    args.putString("dateTextFromMaps", bundleMakeOrder.getString("dateTextFromMakeOrder"));
+                    args.putString("timeTextFromMaps", bundleMakeOrder.getString("timeTextFromMakeOrder"));
                     Intent intentBackToMakeOrder = new Intent
                             (MapsActivity.this, MakeOrderActivity.class);
-                    intentBackToMakeOrder.putExtra("bundle", args);
+                    intentBackToMakeOrder.putExtra("bundleMaps", args);
                     startActivity(intentBackToMakeOrder);
                 } else {
                     Toast.makeText

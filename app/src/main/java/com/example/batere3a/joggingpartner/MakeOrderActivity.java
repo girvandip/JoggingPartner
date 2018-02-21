@@ -36,6 +36,10 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,33 +63,14 @@ public class MakeOrderActivity extends AppCompatActivity {
     private EditText mTimeText;
     private EditText mLocationNameEditText;
     private EditText mAddressNameEditText;
+
     private FirebaseUser user;
+    private FirebaseDatabase database;
+
+    private static final String BASE_URL_USER = "Users";
+    private static final String BASE_URL_USER_PHONE = "Phone";
+
     private LatLng mLatLng;
-
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
-
-    private void savePreferences(){
-        SharedPreferences sharedPreferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("dateText", mDateText.getText().toString().trim());
-        editor.putString("timeText", mTimeText.getText().toString().trim());
-        editor.putString("locationText", mLocationNameEditText.getText().toString().trim());
-        editor.putString("addressText", mAddressNameEditText.getText().toString().trim());
-        editor.commit();   // I missed to save the data to preference here,.
-    }
-
-    private void loadPreferences(){
-        SharedPreferences sharedPreferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        mDateText.setText(sharedPreferences.getString("dateText", ""));
-        mTimeText.setText(sharedPreferences.getString("timeText",
-                mTimeText.getText().toString().trim()));
-        mLocationNameEditText.setText(sharedPreferences.getString("locationText",
-                mLocationNameEditText.getText().toString().trim()));
-        mAddressNameEditText.setText(sharedPreferences.getString("addressText",
-                mAddressNameEditText.getText().toString().trim()));
-    }
 
     private void clearPref() {
         SharedPreferences preferences = getSharedPreferences
@@ -135,15 +120,19 @@ public class MakeOrderActivity extends AppCompatActivity {
 
         mLatlngTextView = (TextView) findViewById(R.id.latlngText);
 
+        database = FirebaseDatabase.getInstance();
+
         if(isServicesOK()){
             init();
         }
 
-        Bundle bundle = getIntent().getParcelableExtra("bundle");
+        Bundle bundle = getIntent().getParcelableExtra("bundleMaps");
         if (bundle != null) {
             mLatLng = bundle.getParcelable("latLngLocation");
             String mLocationName = bundle.getString("locationName");
             String mAddressName = bundle.getString("addressName");
+            mDateText.setText(bundle.getString("dateTextFromMaps"));
+            mTimeText.setText(bundle.getString("timeTextFromMaps"));
             if (mLatLng != null) {
                 Log.d(TAG,  mLatLng.latitude + " " + mLatLng.longitude);
                 //mLatlngTextView.setText("Location: " + mLatLng.latitude + " " + mLatLng.longitude);
@@ -206,6 +195,8 @@ public class MakeOrderActivity extends AppCompatActivity {
                     jsonObject.put("time", mTimeText.getText().toString().trim());
                     jsonObject.put("latitude", mLatLng.latitude);
                     jsonObject.put("longitude", mLatLng.longitude);
+                    jsonObject.put("phone_runner", "");
+                    jsonObject.put("phone_partner", "");
                     jsonObject.put("status", "Open");
                     //Log.i("ASDF", "MASUK");
                     Log.i("JSON", jsonObject.toString());
@@ -237,10 +228,14 @@ public class MakeOrderActivity extends AppCompatActivity {
                 if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
-                    Intent intent = new Intent
+                    Bundle args = new Bundle();
+                    args.putString("dateTextFromMakeOrder", mDateText.getText().toString());
+                    args.putString("timeTextFromMakeOrder", mTimeText.getText().toString());
+                    Intent intentOpenMap = new Intent
                             (MakeOrderActivity.this,
                                     MapsActivity.class);
-                    startActivity(intent);
+                    intentOpenMap.putExtra("bundleMakeOrder", args);
+                    startActivity(intentOpenMap);
                 }
             }
         });
@@ -253,10 +248,14 @@ public class MakeOrderActivity extends AppCompatActivity {
                 if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
-                    Intent intent = new Intent
+                    Bundle args = new Bundle();
+                    args.putString("dateTextFromMakeOrder", mDateText.getText().toString().trim());
+                    args.putString("timeTextFromMakeOrder", mTimeText.getText().toString().trim());
+                    Intent intentOpenMap = new Intent
                             (MakeOrderActivity.this,
                                     MapsActivity.class);
-                    startActivity(intent);
+                    intentOpenMap.putExtra("bundleMakeOrder", args);
+                    startActivity(intentOpenMap);
                 }
             }
         });
