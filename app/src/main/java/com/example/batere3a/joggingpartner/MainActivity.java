@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import android.widget.TextView;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -76,16 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        mLogoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-            }
-        });
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
