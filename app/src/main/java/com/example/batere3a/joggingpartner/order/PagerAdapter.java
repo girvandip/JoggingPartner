@@ -1,9 +1,11 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.order;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.example.batere3a.joggingpartner.History;
 
 /**
  * Created by Aldrich on 2/15/2018.

@@ -1,4 +1,4 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.order;
 
 
 import android.os.Bundle;
@@ -8,22 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONObject;
+import com.example.batere3a.joggingpartner.R;
 
 import java.util.LinkedList;
-
-import static android.content.ContentValues.TAG;
 
 
 /**

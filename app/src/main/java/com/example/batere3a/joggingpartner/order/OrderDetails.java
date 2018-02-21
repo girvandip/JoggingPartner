@@ -1,4 +1,4 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.order;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
+import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONObject;
 
