@@ -28,4 +28,6 @@
     <string name="mapPickerHint">Pick your location</string>
     <string name="addressHint">This is your address</string>
     <string name="makeOrder">Make Order</string>
+    <string name="loginTextHeader">Join us</string>
+    <string name="loginTextSubHeader">for experiencing exciting moment !</string>
 </resources>
