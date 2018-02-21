@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -34,9 +36,14 @@ public class OrderDetails extends AppCompatActivity {
             status.setText(jsonData.getString("status"));
 
             if(jsonData.getString("status").equals("Progress")){
+                View separator = (View) findViewById(R.id.phone_separator);
+                separator.setVisibility(View.VISIBLE);
+
+                LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.partner_contact);
+                phoneLayout.setVisibility(LinearLayout.VISIBLE);
+
                 TextView partnerPhone = findViewById(R.id.partner_phone);
                 partnerPhone.setText(jsonData.getString("phone_partner"));
-                partnerPhone.setVisibility(TextView.VISIBLE);
             }
 
             TextView location = findViewById(R.id.order_place);

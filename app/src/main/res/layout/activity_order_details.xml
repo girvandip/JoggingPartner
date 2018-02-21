@@ -42,15 +42,39 @@
                 android:text="Open Order"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        </LinearLayout>
+
+        <View
+            android:id="@+id/phone_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/order_status_wrapper"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/partner_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone_separator"
+            android:orientation="vertical"
+            android:padding="@dimen/large_margin"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Partner's Phone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
             <TextView
                 android:id="@+id/partner_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:visibility="invisible" />
-
+                android:text="Open Order"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         </LinearLayout>
 
@@ -58,7 +82,7 @@
             android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/order_status_wrapper"
+            android:layout_below="@id/partner_contact"
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
@@ -106,7 +130,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/end_separator"
-            android:layout_marginLeft="@dimen/large_margin"
             android:layout_marginStart="@dimen/large_margin"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
@@ -124,7 +147,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/data_intent_id"
             android:layout_below="@id/end_separator"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
     </RelativeLayout>
 </ScrollView>
 
