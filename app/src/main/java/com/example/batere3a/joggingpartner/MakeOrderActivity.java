@@ -9,6 +9,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -64,37 +65,6 @@ public class MakeOrderActivity extends AppCompatActivity {
 
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
-    private void savePreferences(){
-        SharedPreferences sharedPreferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("dateText", mDateText.getText().toString().trim());
-        editor.putString("timeText", mTimeText.getText().toString().trim());
-        editor.putString("locationText", mLocationNameEditText.getText().toString().trim());
-        editor.putString("addressText", mAddressNameEditText.getText().toString().trim());
-        editor.commit();   // I missed to save the data to preference here,.
-    }
-
-    private void loadPreferences(){
-        SharedPreferences sharedPreferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        mDateText.setText(sharedPreferences.getString("dateText", ""));
-        mTimeText.setText(sharedPreferences.getString("timeText",
-                mTimeText.getText().toString().trim()));
-        mLocationNameEditText.setText(sharedPreferences.getString("locationText",
-                mLocationNameEditText.getText().toString().trim()));
-        mAddressNameEditText.setText(sharedPreferences.getString("addressText",
-                mAddressNameEditText.getText().toString().trim()));
-    }
-
-    private void clearPref() {
-        SharedPreferences preferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
-    }
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -139,11 +109,13 @@ public class MakeOrderActivity extends AppCompatActivity {
             init();
         }
 
-        Bundle bundle = getIntent().getParcelableExtra("bundle");
+        Bundle bundle = getIntent().getParcelableExtra("bundleFromMaps");
         if (bundle != null) {
             mLatLng = bundle.getParcelable("latLngLocation");
             String mLocationName = bundle.getString("locationName");
             String mAddressName = bundle.getString("addressName");
+            mDateText.setText(bundle.getString("dateText"));
+            mTimeText.setText(bundle.getString("timeText"));
             if (mLatLng != null) {
                 Log.d(TAG,  mLatLng.latitude + " " + mLatLng.longitude);
                 //mLatlngTextView.setText("Location: " + mLatLng.latitude + " " + mLatLng.longitude);
@@ -185,6 +157,8 @@ public class MakeOrderActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    SharedPreferences preferences = PreferenceManager
+                            .getDefaultSharedPreferences(MakeOrderActivity.this);
                     URL url = new URL("https://android-544df.firebaseio.com/Orders.json");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //Log.i("ASDF", "MASUK4");
@@ -206,6 +180,11 @@ public class MakeOrderActivity extends AppCompatActivity {
                     jsonObject.put("time", mTimeText.getText().toString().trim());
                     jsonObject.put("latitude", mLatLng.latitude);
                     jsonObject.put("longitude", mLatLng.longitude);
+                    jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
+                    jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
+                    jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
+                    //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
+                    jsonObject.put("phone_partner", "");
                     jsonObject.put("status", "Open");
                     //Log.i("ASDF", "MASUK");
                     Log.i("JSON", jsonObject.toString());
@@ -237,10 +216,13 @@ public class MakeOrderActivity extends AppCompatActivity {
                 if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
-                    Intent intent = new Intent
-                            (MakeOrderActivity.this,
-                                    MapsActivity.class);
-                    startActivity(intent);
+                    Bundle args = new Bundle();
+                    args.putString("dateText", mDateText.getText().toString().trim());
+                    args.putString("timeText", mTimeText.getText().toString().trim());
+                    Intent intentGoToMap = new Intent
+                            (MakeOrderActivity.this, MapsActivity.class);
+                    intentGoToMap.putExtra("bundleFromMakeOrder", args);
+                    startActivity(intentGoToMap);
                 }
             }
         });
@@ -253,10 +235,13 @@ public class MakeOrderActivity extends AppCompatActivity {
                 if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
-                    Intent intent = new Intent
-                            (MakeOrderActivity.this,
-                                    MapsActivity.class);
-                    startActivity(intent);
+                    Bundle args = new Bundle();
+                    args.putString("dateText", mDateText.getText().toString().trim());
+                    args.putString("timeText", mTimeText.getText().toString().trim());
+                    Intent intentGoToMap = new Intent
+                            (MakeOrderActivity.this, MapsActivity.class);
+                    intentGoToMap.putExtra("bundleFromMakeOrder", args);
+                    startActivity(intentGoToMap);
                 }
             }
         });
