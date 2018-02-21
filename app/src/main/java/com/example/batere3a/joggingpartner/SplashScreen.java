@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,7 +14,7 @@ import android.view.WindowManager;
 public class SplashScreen extends AppCompatActivity {
 
     // Splash Screen Time Setter
-    private static final int SPLASH_TIME_OUT = 3000;
+    private static final int SPLASH_TIME_OUT = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +48,11 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIME_OUT);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("SplashScreenTag", "ASDFASDF");
     }
 }
