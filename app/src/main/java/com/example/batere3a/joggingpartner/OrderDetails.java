@@ -13,6 +13,9 @@ import android.widget.Toolbar;
 import org.json.JSONObject;
 
 public class OrderDetails extends AppCompatActivity {
+    private String dataId;
+    private String data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,22 +23,23 @@ public class OrderDetails extends AppCompatActivity {
         setContentView(R.layout.activity_order_details);
 
         Intent intent = getIntent();
-        String data = intent.getStringExtra("data");
-        String dataId = intent.getStringExtra("order_id");
+        this.data = intent.getStringExtra("data");
+        this.dataId = intent.getStringExtra("order_id");
         try {
             JSONObject jsonData = new JSONObject(data);
 
             TextView result = findViewById(R.id.data_intent);
             result.setText(data);
 
-            // TODO: set title
-            Log.d("order details", dataId);
+            android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+            String title = "ID - " + dataId.substring(1);
+            toolbar.setTitle(title);
 
             // bind the data
             TextView status = findViewById(R.id.order_status);
             status.setText(jsonData.getString("status"));
 
-            if(jsonData.getString("status").equals("Progress")){
+            if (jsonData.getString("status").equals("Progress")) {
                 View separator = (View) findViewById(R.id.phone_separator);
                 separator.setVisibility(View.VISIBLE);
 

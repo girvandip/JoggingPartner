@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/data_intent"
             android:layout_below="@id/end_separator"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
