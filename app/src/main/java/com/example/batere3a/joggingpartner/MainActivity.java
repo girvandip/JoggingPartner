@@ -188,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else if (id == R.id.action_logout) {
             mAuth.signOut();
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            clearPreferences();
+            finish();
         } else if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
