@@ -14,12 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
+import android.widget.TextView;
+import com.example.batere3a.joggingpartner.database.FetchData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // fetch data and print it to screen
+
+
+        TextView result = findViewById(R.id.result);
+        FetchData users = new FetchData("Users", "GET", result);
+        users.execute();
     }
 
     @Override
