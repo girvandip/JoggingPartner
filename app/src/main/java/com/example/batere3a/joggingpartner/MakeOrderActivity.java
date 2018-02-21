@@ -9,6 +9,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -67,19 +68,6 @@ public class MakeOrderActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
 
-    private static final String BASE_URL_USER = "Users";
-    private static final String BASE_URL_USER_PHONE = "Phone";
-
-    private LatLng mLatLng;
-
-    private void clearPref() {
-        SharedPreferences preferences = getSharedPreferences
-                ("PREFERENCE", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
-    }
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -126,13 +114,13 @@ public class MakeOrderActivity extends AppCompatActivity {
             init();
         }
 
-        Bundle bundle = getIntent().getParcelableExtra("bundleMaps");
+        Bundle bundle = getIntent().getParcelableExtra("bundleFromMaps");
         if (bundle != null) {
             mLatLng = bundle.getParcelable("latLngLocation");
             String mLocationName = bundle.getString("locationName");
             String mAddressName = bundle.getString("addressName");
-            mDateText.setText(bundle.getString("dateTextFromMaps"));
-            mTimeText.setText(bundle.getString("timeTextFromMaps"));
+            mDateText.setText(bundle.getString("dateText"));
+            mTimeText.setText(bundle.getString("timeText"));
             if (mLatLng != null) {
                 Log.d(TAG,  mLatLng.latitude + " " + mLatLng.longitude);
                 //mLatlngTextView.setText("Location: " + mLatLng.latitude + " " + mLatLng.longitude);
@@ -174,6 +162,8 @@ public class MakeOrderActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    SharedPreferences preferences = PreferenceManager
+                            .getDefaultSharedPreferences(MakeOrderActivity.this);
                     URL url = new URL("https://android-544df.firebaseio.com/Orders.json");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //Log.i("ASDF", "MASUK4");
@@ -195,7 +185,11 @@ public class MakeOrderActivity extends AppCompatActivity {
                     jsonObject.put("time", mTimeText.getText().toString().trim());
                     jsonObject.put("latitude", mLatLng.latitude);
                     jsonObject.put("longitude", mLatLng.longitude);
-                    jsonObject.put("phone_runner", "");
+<<<<<<< app/src/main/java/com/example/batere3a/joggingpartner/MakeOrderActivity.java
+                    jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
+                    jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
+                    jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
+                    //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
                     jsonObject.put("phone_partner", "");
                     jsonObject.put("status", "Open");
                     //Log.i("ASDF", "MASUK");
@@ -229,13 +223,12 @@ public class MakeOrderActivity extends AppCompatActivity {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
                     Bundle args = new Bundle();
-                    args.putString("dateTextFromMakeOrder", mDateText.getText().toString());
-                    args.putString("timeTextFromMakeOrder", mTimeText.getText().toString());
-                    Intent intentOpenMap = new Intent
-                            (MakeOrderActivity.this,
-                                    MapsActivity.class);
-                    intentOpenMap.putExtra("bundleMakeOrder", args);
-                    startActivity(intentOpenMap);
+                    args.putString("dateText", mDateText.getText().toString().trim());
+                    args.putString("timeText", mTimeText.getText().toString().trim());
+                    Intent intentGoToMap = new Intent
+                            (MakeOrderActivity.this, MapsActivity.class);
+                    intentGoToMap.putExtra("bundleFromMakeOrder", args);
+                    startActivity(intentGoToMap);
                 }
             }
         });
@@ -249,13 +242,12 @@ public class MakeOrderActivity extends AppCompatActivity {
                     displayPromptForEnablingGPS(MakeOrderActivity.this);
                 } else {
                     Bundle args = new Bundle();
-                    args.putString("dateTextFromMakeOrder", mDateText.getText().toString().trim());
-                    args.putString("timeTextFromMakeOrder", mTimeText.getText().toString().trim());
-                    Intent intentOpenMap = new Intent
-                            (MakeOrderActivity.this,
-                                    MapsActivity.class);
-                    intentOpenMap.putExtra("bundleMakeOrder", args);
-                    startActivity(intentOpenMap);
+                    args.putString("dateText", mDateText.getText().toString().trim());
+                    args.putString("timeText", mTimeText.getText().toString().trim());
+                    Intent intentGoToMap = new Intent
+                            (MakeOrderActivity.this, MapsActivity.class);
+                    intentGoToMap.putExtra("bundleFromMakeOrder", args);
+                    startActivity(intentGoToMap);
                 }
             }
         });
