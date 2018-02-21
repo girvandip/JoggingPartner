@@ -37,6 +37,10 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,10 +64,9 @@ public class MakeOrderActivity extends AppCompatActivity {
     private EditText mTimeText;
     private EditText mLocationNameEditText;
     private EditText mAddressNameEditText;
-    private FirebaseUser user;
-    private LatLng mLatLng;
 
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -104,6 +107,8 @@ public class MakeOrderActivity extends AppCompatActivity {
         mAddressNameEditText = (EditText) findViewById(R.id.addressText);
 
         mLatlngTextView = (TextView) findViewById(R.id.latlngText);
+
+        database = FirebaseDatabase.getInstance();
 
         if(isServicesOK()){
             init();
@@ -180,6 +185,7 @@ public class MakeOrderActivity extends AppCompatActivity {
                     jsonObject.put("time", mTimeText.getText().toString().trim());
                     jsonObject.put("latitude", mLatLng.latitude);
                     jsonObject.put("longitude", mLatLng.longitude);
+<<<<<<< app/src/main/java/com/example/batere3a/joggingpartner/MakeOrderActivity.java
                     jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
                     jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
                     jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
