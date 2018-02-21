@@ -42,6 +42,15 @@
                 android:text="Open Order"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+            <TextView
+                android:id="@+id/partner_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:visibility="invisible" />
+
 
         </LinearLayout>
 
@@ -103,6 +112,19 @@
             android:layout_marginBottom="@dimen/large_margin"
             android:text="cancel" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_intent"
+            android:layout_below="@id/end_separator"
+            android:visibility="visible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_intent_id"
+            android:layout_below="@id/end_separator"
+            android:visibility="visible"/>
     </RelativeLayout>
 </ScrollView>
 
