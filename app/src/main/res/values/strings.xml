@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">JoggingPartner</string>
     <string name="action_settings">Settings</string>
+
+    <string name="orders">Orders</string>
+    <string name="history">History</string>
+    <string name="openorder">Open Order</string>
+
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_splash_screen">Splash Screen</string>
 

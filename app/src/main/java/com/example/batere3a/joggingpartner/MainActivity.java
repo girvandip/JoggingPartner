@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +29,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.example.batere3a.joggingpartner.order.PagerAdapter;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
     private Button mLogoutBtn;
     private Button mMakeOrder;
+    private static final String BASE_URL = "https://android-544df.firebaseio.com/";
+    private String userData = null;
 
     //Used for Pedometer
     private TextView TvSteps;
@@ -125,6 +131,55 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        TextView result = findViewById(R.id.result);
+        FetchData users = new FetchData("Orders", "GET", result);
+        users.execute();
+        try {
+            userData = users.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // Create an instance of the tab layout from the view.
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        // Set the text for each tab.
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.orders).setIcon(R.drawable.my_orders));
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.openorder).setIcon(R.drawable.openorder));
+        tabLayout.addTab(tabLayout.newTab()
+                .setText(R.string.history).setIcon(R.drawable.history));
+        // Set the tabs to fill the entire layout.
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        // Using PagerAdapter to manage page views in fragments.
+        // Each page is represented by its own fragment.
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount(), userData);
+        viewPager.setAdapter(adapter);
+
+        // Setting a listener for clicks.
+        viewPager.addOnPageChangeListener(new
+                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                ((Toolbar) findViewById(R.id.toolbar)).setTitle(tab.getText());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
         // Get an instance of the SensorManager
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -198,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }

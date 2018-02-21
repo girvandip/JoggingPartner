@@ -34,6 +34,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".order.OrderDetails"
+            android:label="order_details"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.batere3a.joggingpartner.MainActivity" />
         </activity>
         <activity
             android:name=".LoginActivity"

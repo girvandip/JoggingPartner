@@ -35,8 +35,6 @@ public class FirebaseConnector {
                     .appendPath(resource + ".json")
                     .build();
 
-            Log.d("url : ", builtURI.toString()); // test
-
             URL url = new URL(builtURI.toString());
             urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setRequestMethod(requestMethod);
