@@ -68,6 +68,8 @@ public class MakeOrderActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
 
+    private LatLng mLatLng;
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -185,7 +187,6 @@ public class MakeOrderActivity extends AppCompatActivity {
                     jsonObject.put("time", mTimeText.getText().toString().trim());
                     jsonObject.put("latitude", mLatLng.latitude);
                     jsonObject.put("longitude", mLatLng.longitude);
-<<<<<<< app/src/main/java/com/example/batere3a/joggingpartner/MakeOrderActivity.java
                     jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
                     jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
                     jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
