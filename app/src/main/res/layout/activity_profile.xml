@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView5"
         android:layout_alignStart="@+id/textView5"
-        android:layout_below="@+id/editText8"
+        android:layout_below="@+id/Email"
         android:layout_marginTop="25dp"
         android:text="Nickname"
         android:textSize="20sp" />
@@ -53,59 +53,67 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView4"
         android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/editText10"
-        android:layout_alignStart="@+id/editText10"
+        android:layout_alignLeft="@+id/Phone"
+        android:layout_alignStart="@+id/Phone"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
         android:text="Girvandi Purba" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView5"
         android:layout_alignBottom="@+id/textView5"
-        android:layout_alignLeft="@+id/editText7"
-        android:layout_alignStart="@+id/editText7"
+        android:layout_alignLeft="@+id/Name"
+        android:layout_alignStart="@+id/Name"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
         android:text="girvandip@gmail.com" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/Nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/editText10"
-        android:layout_alignStart="@+id/editText10"
+        android:layout_alignLeft="@+id/Phone"
+        android:layout_alignStart="@+id/Phone"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/Phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView7"
         android:layout_alignBottom="@+id/textView7"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignStart="@+id/button4"
+        android:layout_alignLeft="@+id/SaveButton"
+        android:layout_alignStart="@+id/SaveButton"
         android:ems="10"
         android:inputType="phone" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/SaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText10"
+        android:layout_below="@+id/Phone"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:text="Save" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SaveButton"
+        android:id="@+id/result" />
+
 </RelativeLayout>
