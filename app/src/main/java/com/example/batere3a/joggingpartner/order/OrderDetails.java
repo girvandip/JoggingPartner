@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ import android.widget.Toolbar;
 import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.MakeOrderActivity;
 import com.example.batere3a.joggingpartner.R;
+import com.google.android.gms.iid.InstanceID;
 
 import org.json.JSONObject;
 
@@ -133,6 +135,28 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                 }
             }
         });
+
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    String iid = InstanceID.getInstance(OrderDetails.this).getId();
+                    String authorizedEntity = "82905626474"; // Project id from Google Developer Console
+                    String scope = "GCM"; // e.g. communicating using GCM, but you can use any
+                    // URL-safe characters up to a maximum of 1000, or
+                    // you can also leave it blank.
+                    String token = InstanceID.getInstance(OrderDetails.this)
+                            .getToken(authorizedEntity, scope);
+
+                    Log.d("GCM instance id", iid);
+                    Log.d("GCM token id", token);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute(null, null, null);
+
     }
 
     protected void onResume() {
@@ -183,6 +207,7 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
     }
 
     public void saveOrderToDatabase() throws IOException {
+        // TODO: push the GCM token
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
