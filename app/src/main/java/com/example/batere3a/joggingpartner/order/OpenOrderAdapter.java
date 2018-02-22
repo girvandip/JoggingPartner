@@ -28,16 +28,24 @@ public class OpenOrderAdapter extends RecyclerView.Adapter<OpenOrderAdapter.Orde
             JSONObject orderData = new JSONObject(data);
             orderIdArray = orderData.names();
             orderDataArray = orderData.toJSONArray(orderIdArray);
-            for (int i = 0; i < orderDataArray.length(); i++) {
-                if (((JSONObject) orderDataArray.get(i)).getString("status")
-                        .equals("Progress")) {
-                    orderDataArray.remove(i);
-                }
-            }
-            for (int i = 0; i < orderDataArray.length(); i++) {
+            int i = 0;
+            while(i < orderDataArray.length()){
                 if (((JSONObject) orderDataArray.get(i)).getString("status")
                         .equals("Completed")) {
                     orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
+                }
+            }
+            i = 0;
+            while(i < orderDataArray.length()){
+                if (((JSONObject) orderDataArray.get(i)).getString("status")
+                        .equals("Progress")) {
+                    orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
                 }
             }
         } catch (Exception e) {

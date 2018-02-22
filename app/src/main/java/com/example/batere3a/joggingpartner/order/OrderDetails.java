@@ -3,12 +3,14 @@ package com.example.batere3a.joggingpartner.order;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,9 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.batere3a.joggingpartner.MakeOrderActivity;
 import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class OrderDetails extends AppCompatActivity implements SensorEventListener {
     private String dataId;
@@ -135,5 +145,48 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public void saveOrderToDatabase(View view) throws IOException {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SharedPreferences preferences = PreferenceManager
+                            .getDefaultSharedPreferences(OrderDetails.this);
+                    String api = "https://android-544df.firebaseio.com/Orders/" + dataId + ".json";
+                    URL url = new URL(api);
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("PATCH");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    String json = "";
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("status", "Progress");
+                    jsonObject.put("partner",
+                            preferences.getString("userName", ""));
+                    jsonObject.put("phone_partner",
+                            preferences.getString("userPhone", ""));
+                    Log.i("order details", jsonObject.toString());
+
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonObject.toString());
+                    os.flush();
+                    os.close();
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG", conn.getResponseMessage());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    Log.e("Error", "ERROR JSON EXCEPTION");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }
