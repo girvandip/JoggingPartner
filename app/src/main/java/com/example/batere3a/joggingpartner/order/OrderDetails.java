@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -96,6 +97,9 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
                 Button acceptButton = findViewById(R.id.accept_button);
                 acceptButton.setVisibility(Button.GONE);
+
+                FloatingActionButton chatButton = findViewById(R.id.chat_button);
+                chatButton.setVisibility(FloatingActionButton.VISIBLE);
             }
 
             TextView location = findViewById(R.id.order_place);
