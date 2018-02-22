@@ -50,8 +50,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),
-                        "you click on an order", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), OrderDetails.class);
 
                 String data = ((TextView)view.findViewById(R.id.json_container))

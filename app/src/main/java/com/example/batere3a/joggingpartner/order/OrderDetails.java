@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -63,6 +64,14 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
                 TextView partnerPhone = findViewById(R.id.partner_phone);
                 partnerPhone.setText(jsonData.getString("phone_partner"));
+
+                View mainView = findViewById(R.id.order_detail);
+                Snackbar snackbar = Snackbar
+                        .make(mainView,
+                                "Swipe the screen to call partner",
+                                Snackbar.LENGTH_LONG);
+
+                snackbar.show();
             }
 
             TextView location = findViewById(R.id.order_place);
