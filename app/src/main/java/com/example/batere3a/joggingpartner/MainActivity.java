@@ -23,9 +23,7 @@ import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
-import com.example.batere3a.joggingpartner.order.OrderDetails;
-import com.example.batere3a.joggingpartner.pedometer.StepDetector;
-import com.example.batere3a.joggingpartner.pedometer.StepListener;
+import com.example.batere3a.joggingpartner.pedometer.PedometerActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -35,22 +33,12 @@ import com.github.clans.fab.FloatingActionButton;
 
 import com.example.batere3a.joggingpartner.order.PagerAdapter;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
+public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
-    private Button mLogoutBtn;
-    private Button mMakeOrder;
     private static final String BASE_URL = "https://android-544df.firebaseio.com/";
     private String userData = null;
-
-    //Used for Pedometer
-    private TextView TvSteps;
-    private StepDetector simpleStepDetector;
-    private SensorManager sensorManager;
-    private Sensor accel;
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
-    private int numSteps;
 
     public void clearPreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
-        mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken(getString(R.string.default_web_client_id))
@@ -94,15 +80,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         };
 
-        mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
-        mMakeOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent
-                        (MainActivity.this, MakeOrderActivity.class));
-            }
-        });
-
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -119,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         fabPedometer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent
+                        (MainActivity.this, PedometerActivity.class));
             }
         });
 
@@ -172,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                ((Toolbar) findViewById(R.id.toolbar)).setTitle(tab.getText());
+                getSupportActionBar().setTitle(tab.getText());
             }
 
             @Override
@@ -184,36 +161,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-        // Get an instance of the SensorManager
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
-
-        TvSteps = (TextView) findViewById(R.id.tv_steps);
-        Button BtnStart = (Button) findViewById(R.id.btn_start);
-        Button BtnStop = (Button) findViewById(R.id.btn_stop);
-        BtnStart.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                numSteps = 0;
-                sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
-            }
-        });
-
-
-        BtnStop.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                sensorManager.unregisterListener(MainActivity.this);
-            }
-        });
-        // fetch data and print it to screen
-
     }
 
     @Override
@@ -253,23 +200,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            simpleStepDetector.updateAccel(
-                    event.timestamp, event.values[0], event.values[1], event.values[2]);
-        }
-    }
-
-    @Override
-    public void step(long timeNs) {
-        numSteps++;
-        TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
 }
