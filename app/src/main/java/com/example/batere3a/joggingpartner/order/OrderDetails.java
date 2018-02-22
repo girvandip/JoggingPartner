@@ -247,6 +247,8 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                     jsonObject.put("status", "Progress");
                     jsonObject.put("partner",
                             preferences.getString("userName", ""));
+                    jsonObject.put("id_partner",
+                            preferences.getString("userId", ""));
                     jsonObject.put("phone_partner",
                             preferences.getString("userPhone", ""));
                     Log.i("order details", jsonObject.toString());
