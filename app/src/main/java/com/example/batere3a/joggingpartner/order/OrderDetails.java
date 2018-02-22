@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -82,6 +83,9 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                                 Snackbar.LENGTH_LONG);
 
                 snackbar.show();
+
+                Button acceptButton = findViewById(R.id.accept_button);
+                acceptButton.setVisibility(Button.GONE);
             }
 
             TextView location = findViewById(R.id.order_place);
