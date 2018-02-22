@@ -121,4 +121,6 @@
     <string name="makeOrder">Make Order</string>
     <string name="loginTextHeader">Join us</string>
     <string name="loginTextSubHeader">for experiencing exciting moment !</string>
+    <string name="introductionMakeOrder">Please fill Date, Time, and Location</string>
+    <string name="doNotMeetRequirementMakeOrder">You still have something blank</string>
 </resources>
