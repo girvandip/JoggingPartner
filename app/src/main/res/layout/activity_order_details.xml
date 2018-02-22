@@ -151,16 +151,15 @@
             android:layout_below="@id/end_separator"
             android:visibility="gone"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/chat_button"
+        <Button
+            android:id="@+id/complete_button"
             android:layout_below="@id/end_separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            app:srcCompat="@android:drawable/ic_dialog_email"
+            android:text="Complete"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
             android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>
