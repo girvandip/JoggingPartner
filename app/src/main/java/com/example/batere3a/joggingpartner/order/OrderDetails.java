@@ -74,7 +74,16 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                 phoneLayout.setVisibility(LinearLayout.VISIBLE);
 
                 TextView partnerPhone = findViewById(R.id.partner_phone);
-                partnerPhone.setText(jsonData.getString("phone_partner"));
+                String phone = null;
+                SharedPreferences preferences = PreferenceManager
+                        .getDefaultSharedPreferences(OrderDetails.this);
+                if(jsonData.getString("partner")
+                        .equals(preferences.getString("userName", ""))){
+                    phone = jsonData.getString("phone_runner"); // user as the partner
+                } else {
+                    phone = jsonData.getString("phone_partner"); // user as the runner
+                }
+                partnerPhone.setText(phone);
 
                 View mainView = findViewById(R.id.order_detail);
                 Snackbar snackbar = Snackbar

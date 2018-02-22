@@ -1,6 +1,8 @@
 package com.example.batere3a.joggingpartner.order;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONArray;
@@ -20,11 +23,11 @@ import java.util.LinkedList;
  */
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
-    private final LinkedList<String> mWordList;
+    private final String username;
     private JSONArray orderDataArray = null;
     private JSONArray orderIdArray = null;
 
-    public OrderListAdapter(LinkedList<String> orderList, String data) {
+    public OrderListAdapter(String username, String data) {
         try {
             JSONObject orderData = new JSONObject(data);
             orderIdArray = orderData.names();
@@ -53,7 +56,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             e.printStackTrace();
         }
 
-        this.mWordList = orderList;
+        this.username = username;
     }
 
     @Override
@@ -84,7 +87,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         try {
             JSONObject temp = (JSONObject) orderDataArray.get(position);
 
-            holder.partnerName.setText(temp.getString("runner"));
+            if(username.equals(temp.getString("runner"))){
+                holder.partnerName.setText(temp.getString("partner"));
+            } else {
+                holder.partnerName.setText(temp.getString("runner"));
+            }
+
 
             String dateTime = temp.getString("date")
                     + " " + temp.getString("time");

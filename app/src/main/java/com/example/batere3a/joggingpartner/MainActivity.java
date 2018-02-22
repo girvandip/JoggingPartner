@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
+import com.example.batere3a.joggingpartner.order.OrderDetails;
 import com.example.batere3a.joggingpartner.pedometer.StepDetector;
 import com.example.batere3a.joggingpartner.pedometer.StepListener;
 import com.google.android.gms.auth.api.Auth;
@@ -137,9 +138,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Using PagerAdapter to manage page views in fragments.
         // Each page is represented by its own fragment.
+        // get the name
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(MainActivity.this);
+        String username = preferences.getString("userName", "");
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount(), userData);
+                (getSupportFragmentManager(), tabLayout.getTabCount(), userData, username);
         viewPager.setAdapter(adapter);
 
         // Setting a listener for clicks.
