@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.batere3a.joggingpartner.History;
-
 /**
  * Created by Aldrich on 2/15/2018.
  */
@@ -43,7 +41,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 openOrder.setArguments(bundle);
                 return openOrder;
             case 2:
-                return new History();
+                History history = new History();
+                history.setArguments(bundle);
+                return history;
             default:
                 return null;
         }
