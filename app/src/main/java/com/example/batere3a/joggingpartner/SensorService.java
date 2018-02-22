@@ -7,22 +7,26 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
+import com.example.batere3a.joggingpartner.MainActivity;
 
 /**
  * Created by fabio on 30/01/2016.
  */
 public class SensorService extends Service {
-    private static final String TAG = "SensorServiceTag";
-    public int counter=0;
+    static MainActivity mainActivity;
 
+    private static final String TAG = "SensorServiceTag";
+    public int counter = 0;
+
+    public static String userDataString;
     private boolean loopingFetchData;
-    private String userDataJson;
     private Thread thread;
     private TextView dummyTextView;
 
@@ -38,6 +42,7 @@ public class SensorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+        Log.i("ASDFASDF", "OnStartCommandCall");
         //SharedPreferences prefs = MainActivity.ctx.getSharedPreferences
         //        ("serviceRunning", MainActivity.ctx.MODE_PRIVATE);
         //counter = prefs.getInt("counter", 0);
@@ -76,12 +81,12 @@ public class SensorService extends Service {
                         FetchData users = new FetchData("Orders", "GET", dummyTextView);
                         users.execute();
                         try {
-                            userDataJson = users.get();
-                            Log.i("ASDFASDF", userDataJson);
+                            userDataString = users.get();
+                            Log.i("BackgroundServiceFetch", userDataString);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Thread.sleep(5000);
+                        Thread.sleep(60000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

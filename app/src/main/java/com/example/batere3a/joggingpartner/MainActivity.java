@@ -10,6 +10,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -37,6 +39,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.batere3a.joggingpartner.order.PagerAdapter;
+import com.example.batere3a.joggingpartner.SensorService;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private FirebaseAuth mAuth;
@@ -56,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Intent mServiceIntent;
     private SensorService mSensorService;
 
+    private ViewPager viewPager;
+    private PagerAdapter adapter;
+    private Handler handler;
+    private TabLayout tabLayout;
+    private TextView result;
+
     static Context ctx;
 
     public Context getCtx() {
@@ -72,8 +81,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         editor.commit();
     }
 
+    public TextView getTextViewDummy() {
+        return result;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("OncreateMain", "ASDFASDF");
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(this);
@@ -89,14 +103,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ctx = this;
         setContentView(R.layout.activity_main);
 
-        /*
         mSensorService = new SensorService(getCtx());
         mServiceIntent = new Intent(getCtx(), mSensorService.getClass());
+        /*
         if (!isMyServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
         }
         */
-
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -138,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        TextView result = findViewById(R.id.result);
+        result = findViewById(R.id.result);
         FetchData users = new FetchData("Orders", "GET", result);
         users.execute();
         try {
@@ -149,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         // Create an instance of the tab layout from the view.
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         // Set the text for each tab.
         tabLayout.addTab(tabLayout.newTab()
                 .setText(R.string.orders).setIcon(R.drawable.my_orders));
@@ -162,8 +175,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Using PagerAdapter to manage page views in fragments.
         // Each page is represented by its own fragment.
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount(), userData);
         viewPager.setAdapter(adapter);
 
@@ -214,13 +227,60 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 sensorManager.unregisterListener(MainActivity.this);
             }
         });
-
         // fetch data and print it to screen
-
 
 //        TextView result = findViewById(R.id.result);
 //        FetchData users = new FetchData("Users", "GET", result);
 //        users.execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*
+        if (mSensorService.userDataString != null) {
+            super.onResume();
+            // Create an instance of the tab layout from the view.
+            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            // Set the text for each tab.
+            tabLayout.addTab(tabLayout.newTab()
+                    .setText(R.string.orders).setIcon(R.drawable.my_orders));
+            tabLayout.addTab(tabLayout.newTab()
+                    .setText(R.string.openorder).setIcon(R.drawable.openorder));
+            tabLayout.addTab(tabLayout.newTab()
+                    .setText(R.string.history).setIcon(R.drawable.history));
+            // Set the tabs to fill the entire layout.
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            // Using PagerAdapter to manage page views in fragments.
+            // Each page is represented by its own fragment.
+            viewPager = (ViewPager) findViewById(R.id.pager);
+            adapter = new PagerAdapter
+                    (getSupportFragmentManager(), tabLayout.getTabCount(),
+                            mSensorService.userDataString);
+            viewPager.setAdapter(adapter);
+
+            // Setting a listener for clicks.
+            viewPager.addOnPageChangeListener(new
+                    TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(tab.getText());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
+        }
+        */
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
