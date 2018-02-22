@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.MakeOrderActivity;
 import com.example.batere3a.joggingpartner.R;
 
@@ -111,6 +112,23 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
         // Get sensor
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+
+        Button acceptButton = findViewById(R.id.accept_button);
+        acceptButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                try {
+                    saveOrderToDatabase();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    Intent intent = new Intent(OrderDetails.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
 
     protected void onResume() {
@@ -160,7 +178,7 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void saveOrderToDatabase(View view) throws IOException {
+    public void saveOrderToDatabase() throws IOException {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

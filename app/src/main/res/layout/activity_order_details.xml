@@ -135,8 +135,7 @@
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:id="@+id/accept_button"
-            android:text="Accept"
-            android:onClick="saveOrderToDatabase" />
+            android:text="Accept" />
 
         <TextView
             android:layout_width="wrap_content"
