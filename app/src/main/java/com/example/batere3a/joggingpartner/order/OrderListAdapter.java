@@ -34,6 +34,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             orderDataArray = orderData.toJSONArray(orderIdArray);
             int i = 0;
             while(i < orderDataArray.length()){
+                if (!((JSONObject) orderDataArray.get(i)).getString("runner")
+                        .equals(username) && !((JSONObject) orderDataArray.get(i))
+                        .getString("partner").equals(username)) {
+                    orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
+                }
+            }
+            i = 0;
+            while(i < orderDataArray.length()){
                 if (((JSONObject) orderDataArray.get(i)).getString("status")
                         .equals("Completed")) {
                     orderDataArray.remove(i);
