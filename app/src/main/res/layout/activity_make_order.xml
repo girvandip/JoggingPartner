@@ -1,118 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context="com.example.batere3a.joggingpartner.MakeOrderActivity"
-    android:orientation="vertical">
-
+    tools:context="com.example.batere3a.joggingpartner.MakeOrderActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutDateText">
 
-        <ImageView
-            android:id="@+id/ic_date_picker"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_date_picker"
-            android:onClick="showDatePickerDialog"/>
+                <ImageView
+                    android:id="@+id/ic_date_picker"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_date_picker"
+                    android:onClick="showDatePickerDialog"/>
 
-        <EditText
-            android:id="@+id/dateText"
+                <EditText
+                    android:id="@+id/dateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/ic_date_picker"
+                    android:hint="@string/datePickerHint"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:onClick="showDatePickerDialog"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ic_date_picker"
-            android:hint="@string/datePickerHint"
-            android:editable="false"
-            android:focusable="false"
-            android:onClick="showDatePickerDialog"/>
+            android:id="@+id/layoutTimeText"
+            android:layout_below="@+id/layoutDateText">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/ic_time_picker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_time_picker"
+                android:onClick="showTimePickerDialog"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/timeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ic_time_picker"
+                android:hint="@string/timePickerHint"
+                android:layout_marginRight="10dp"
+                android:editable="false"
+                android:focusable="false"
+                android:onClick="showTimePickerDialog"/>
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/ic_time_picker"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_time_picker"
-            android:onClick="showTimePickerDialog"/>
-
-        <EditText
-            android:id="@+id/timeText"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ic_time_picker"
-            android:hint="@string/timePickerHint"
-            android:editable="false"
-            android:focusable="false"
-            android:onClick="showTimePickerDialog"/>
+            android:id="@+id/layoutMapsText"
+            android:layout_below="@+id/layoutTimeText">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/ic_map"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_map"
+                android:onClick="showTimePickerDialog"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/mapText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ic_map"
+                android:hint="@string/mapPickerHint"
+                android:layout_marginRight="10dp"
+                android:editable="false"
+                android:focusable="false"
+                android:onClick="showTimePickerDialog"/>
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/ic_map"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_map"
-            android:onClick="showTimePickerDialog"/>
-
-        <EditText
-            android:id="@+id/mapText"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ic_map"
-            android:hint="@string/mapPickerHint"
-            android:editable="false"
-            android:focusable="false"
-            android:onClick="showTimePickerDialog"/>
+            android:id="@+id/layoutLocationText"
+            android:layout_below="@+id/layoutMapsText">
 
+            <ImageView
+                android:id="@+id/ic_address"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_address"/>
+
+            <EditText
+                android:id="@+id/addressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ic_address"
+                android:hint="@string/addressHint"
+                android:layout_marginRight="10dp"
+                android:focusable="false"
+                android:editable="false"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonMakeOrder"
+            android:layout_below="@+id/layoutLocationText"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:elevation="10dp"
+            android:text="@string/makeOrder"
+            android:onClick="saveOrderToDatabase"
+            android:background="@drawable/round_button"/>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/ic_address"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_address"/>
-
-        <EditText
-            android:id="@+id/addressText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ic_address"
-            android:hint="@string/addressHint"
-            android:focusable="false"
-            android:editable="false"/>
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/buttonMakeOrder"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:elevation="10dp"
-        android:text="@string/makeOrder"
-        android:onClick="saveOrderToDatabase"
-        android:background="@drawable/round_button"/>
-</LinearLayout>
+</ScrollView>
