@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +45,6 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
 
             @Override
             public void onClick(View v) {
-
                 numSteps = 0;
                 sensorManager.registerListener(PedometerActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
             }
@@ -58,7 +58,6 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
                 sensorManager.unregisterListener(PedometerActivity.this);
             }
         });
-        // fetch data and print it to screen
 
     }
     @Override
@@ -76,6 +75,6 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
     @Override
     public void step(long timeNs) {
         numSteps++;
-        TvSteps.setText(TEXT_NUM_STEPS + numSteps);
+        TvSteps.setText("" + numSteps);
     }
 }
