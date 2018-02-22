@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-
         mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
-
         mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -124,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         // Create an instance of the tab layout from the view.
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

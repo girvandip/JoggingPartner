@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     private String userName;
     private String userEmail;
     private String userPhone;
+    private String userNickname;
 
     private static final int RC_SIGN_IN = 1;
 
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("userName", userName);
         editor.putString("userEmail", userEmail);
         editor.putString("userPhone", userPhone);
+        editor.putString("userNickname", userNickname);
         editor.commit();
     }
 
@@ -210,10 +212,11 @@ public class LoginActivity extends AppCompatActivity {
                                 userName = userData.getDisplayName();
                                 userEmail = userData.getEmail();
                                 userPhone = userInformation.getString("Phone");
-                                saveUserPreferences();
+                                userNickname = userInformation.getString("Nickname");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            saveUserPreferences();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
