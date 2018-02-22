@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.example.batere3a.joggingpartner.pedometer.StepDetector;
 import com.example.batere3a.joggingpartner.pedometer.StepListener;
 import com.google.android.gms.auth.api.Auth;
@@ -56,20 +57,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         editor.clear();
         editor.commit();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "Green");
-        if(storedTheme.equals("Green")) {
-            setTheme(R.style.AppThemeGreen);
-        } else if(storedTheme.equals("Orange")) {
-            setTheme(R.style.AppThemeOrange);
-        } else {
-            setTheme(R.style.AppThemeBlue);
-        }
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
