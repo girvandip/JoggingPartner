@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,22 +17,35 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private String userId;
+    private String userPhone;
+    private String userData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Change theme according to prefererence
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
+        //Access user Id
+        SharedPreferences sharedPref =
+                android.preference.PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
+        userPhone = sharedPref.getString("userPhone","test");
+        userId = sharedPref.getString("userId","");
+        Log.d("UserID", userId);
+        Log.d("UserPhone", userPhone);
+        TextView result = findViewById(R.id.resultProfile);
+        String resource = "Users/" + "8CJB9g1hSJYMUpHYLu7XH9V5hXD2";
+        FetchData users = new FetchData(resource, "GET", result);
+        users.execute();
+        try {
+            userData = users.get();
+            Log.d("Sabeb", userData);
+            result.setText(userData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        //get current token
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String mUserId;
-        TextView result = findViewById(R.id.result);
-        if (user != null) {
-            // Using getToken as recommended in the firebase docs.
-            mUserId = user.getToken(true).toString();
-            FetchData users = new FetchData("Users", "GET", result);
-            users.execute();
-        }
 
         Button saveButton = (Button) findViewById(R.id.SaveButton);
         final EditText nickName = (EditText) findViewById(R.id.Nickname);

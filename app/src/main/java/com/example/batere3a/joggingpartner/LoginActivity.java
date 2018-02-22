@@ -93,17 +93,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "Green");
-        if(storedTheme.equals("Green")) {
-            setTheme(R.style.AppThemeGreen);
-        } else if(storedTheme.equals("Orange")) {
-            setTheme(R.style.AppThemeOrange);
-        } else {
-            setTheme(R.style.AppThemeBlue);
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 

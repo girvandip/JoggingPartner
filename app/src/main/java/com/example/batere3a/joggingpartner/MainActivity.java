@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         editor.commit();
     }
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
@@ -193,10 +194,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
         // fetch data and print it to screen
 
-
-//        TextView result = findViewById(R.id.result);
-//        FetchData users = new FetchData("Users", "GET", result);
-//        users.execute();
     }
 
     @Override
