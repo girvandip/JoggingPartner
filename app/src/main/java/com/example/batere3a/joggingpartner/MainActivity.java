@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
-    private Button mLogoutBtn;
-    private Button mMakeOrder;
     private static final String BASE_URL = "https://android-544df.firebaseio.com/";
     private String userData = null;
 
@@ -53,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void clearPreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+        editor.remove("userId");
+        editor.remove("userName");
+        editor.remove("userEmail");
+        editor.remove("userPhone");
         editor.commit();
     }
 
@@ -73,10 +74,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-
-        mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
-
-        mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken(getString(R.string.default_web_client_id))
@@ -103,15 +100,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         };
 
-        mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
-        mMakeOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent
-                        (MainActivity.this, MakeOrderActivity.class));
-            }
-        });
-
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -119,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent
+                        (MainActivity.this, MakeOrderActivity.class));
             }
         });
 

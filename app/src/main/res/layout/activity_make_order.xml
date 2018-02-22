@@ -107,13 +107,12 @@
 
     <Button
         android:id="@+id/buttonMakeOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:elevation="10dp"
         android:text="@string/makeOrder"
-        android:onClick="saveOrderToDatabase"/>
-
-    <TextView
-        android:id="@+id/latlngText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:onClick="saveOrderToDatabase"
+        android:background="@drawable/round_button"/>
 </LinearLayout>

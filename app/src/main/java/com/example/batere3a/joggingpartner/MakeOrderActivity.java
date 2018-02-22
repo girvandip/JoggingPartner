@@ -59,7 +59,6 @@ public class MakeOrderActivity extends AppCompatActivity {
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
-    private TextView mLatlngTextView;
     private EditText mDateText;
     private EditText mTimeText;
     private EditText mLocationNameEditText;
@@ -107,8 +106,6 @@ public class MakeOrderActivity extends AppCompatActivity {
         mTimeText = (EditText) findViewById(R.id.timeText);
         mLocationNameEditText = (EditText) findViewById(R.id.mapText);
         mAddressNameEditText = (EditText) findViewById(R.id.addressText);
-
-        mLatlngTextView = (TextView) findViewById(R.id.latlngText);
 
         database = FirebaseDatabase.getInstance();
 
@@ -204,6 +201,10 @@ public class MakeOrderActivity extends AppCompatActivity {
                     Log.i("MSG" , conn.getResponseMessage());
 
                     conn.disconnect();
+                    Intent intentToMain = new Intent(MakeOrderActivity.this, MainActivity.class);
+                    intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intentToMain);
+                    finish();
                 } catch (Exception e) {
                     Log.e("Error", "ERROR JSON EXCEPTION");
                     e.printStackTrace();
