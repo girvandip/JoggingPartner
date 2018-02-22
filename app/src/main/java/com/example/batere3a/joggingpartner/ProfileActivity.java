@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,9 +35,10 @@ public class ProfileActivity extends AppCompatActivity {
         SharedPreferences preferences = android.preference.PreferenceManager
                 .getDefaultSharedPreferences(ProfileActivity.this);
         //get current token
-        String mUserId = preferences.getString("userId", "");
+        String mUserId = preferences.getString("userId", "test");
         TextView result = findViewById(R.id.resultProfile);
         result.setText(mUserId);
+        Log.d("userId",mUserId);
 
         Button saveButton = (Button) findViewById(R.id.SaveButton);
         final EditText nickName = (EditText) findViewById(R.id.Nickname);
