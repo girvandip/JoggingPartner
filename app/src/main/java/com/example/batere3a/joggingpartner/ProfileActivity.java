@@ -30,16 +30,13 @@ public class ProfileActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SharedPreferences preferences = android.preference.PreferenceManager
+                .getDefaultSharedPreferences(ProfileActivity.this);
         //get current token
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String mUserId;
-        TextView result = findViewById(R.id.result);
-        if (user != null) {
-            // Using getToken as recommended in the firebase docs.
-            mUserId = user.getToken(true).toString();
-            FetchData users = new FetchData("Users", "GET", result);
-            users.execute();
-        }
+        String mUserId = preferences.getString("userId", "");
+        TextView result = findViewById(R.id.resultProfile);
+        result.setText(mUserId);
 
         Button saveButton = (Button) findViewById(R.id.SaveButton);
         final EditText nickName = (EditText) findViewById(R.id.Nickname);
