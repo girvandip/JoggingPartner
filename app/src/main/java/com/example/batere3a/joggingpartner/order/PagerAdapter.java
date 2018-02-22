@@ -36,7 +36,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 orders.setArguments(bundle);
                 return orders;
             case 1:
-                return new OpenOrder();
+                OpenOrder openOrder = new OpenOrder();
+                openOrder.setArguments(bundle);
+                return openOrder;
             case 2:
                 return new History();
             default:
