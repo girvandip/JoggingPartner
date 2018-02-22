@@ -22,7 +22,7 @@ import java.util.LinkedList;
 public class OpenOrder extends Fragment {
     protected LinkedList<String> mWordList;
     protected RecyclerView recyclerView;
-    protected OrderListAdapter orderListAdapter;
+    protected OpenOrderAdapter orderListAdapter;
     protected RecyclerView.LayoutManager layoutManager;
 
     private enum LayoutManagerType {
@@ -52,7 +52,7 @@ public class OpenOrder extends Fragment {
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         // initialize the adapter with data from bundle
-        orderListAdapter = new OrderListAdapter(mWordList, getArguments().getString("data"));
+        orderListAdapter = new OpenOrderAdapter(getArguments().getString("data"));
         recyclerView.setAdapter(orderListAdapter);
 
         // Inflate the layout for this fragment
