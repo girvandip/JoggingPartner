@@ -1,4 +1,4 @@
-package com.example.batere3a.joggingpartner;
+package com.example.batere3a.joggingpartner.models;
 
 import java.util.Date;
 

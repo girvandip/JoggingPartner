@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -117,6 +118,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
