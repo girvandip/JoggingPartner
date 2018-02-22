@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String nickname = nickName.getText().toString();
                 String phone = phoneNumber.getText().toString();
                 patchUser(userId, nickname, phone);
-                Toast toast = Toast.makeText(getApplicationContext(), phone, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Profile saved.", Toast.LENGTH_SHORT);
                 toast.show();
                 finish();
             }
