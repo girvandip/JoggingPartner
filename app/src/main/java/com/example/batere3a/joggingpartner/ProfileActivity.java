@@ -75,14 +75,15 @@ public class ProfileActivity extends AppCompatActivity {
         //Change theme according to prefererence
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
+
         //Access user Id
-        SharedPreferences sharedPref =
+        final SharedPreferences sharedPref =
                 android.preference.PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
         userId = sharedPref.getString("userId","");
-        Log.d("UserID", userId);
         TextView result = findViewById(R.id.resultProfile);
+
+        //Get User Data
         String resource = "Users/" + userId;
-        Log.d("UserID", resource);
         final FetchData users = new FetchData(resource, "GET", result);
         users.execute();
         String mPhone = "";
@@ -97,12 +98,12 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("Phone", mPhone);
-        Log.d("Nickname", mNickname);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         Button saveButton = (Button) findViewById(R.id.SaveButton);
+
+        //Putting data into edit text
         EditText name = (EditText) findViewById(R.id.Name);
         name.setText(sharedPref.getString("userName",""));
         EditText email = (EditText) findViewById(R.id.Email);
@@ -111,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
         nickName.setText(mNickname);
         EditText phoneNumber = (EditText) findViewById(R.id.Phone);
         phoneNumber.setText(mPhone);
+
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -118,7 +120,15 @@ public class ProfileActivity extends AppCompatActivity {
                 final EditText phoneNumber = (EditText) findViewById(R.id.Phone);
                 String nickname = nickName.getText().toString();
                 String phone = phoneNumber.getText().toString();
+                //add to shared pref
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("userPhone", phone);
+                editor.putString("userNickname", nickname);
+                editor.commit();
+
+                //Patch to database
                 patchUser(userId, nickname, phone);
+
                 Toast toast = Toast.makeText(getApplicationContext(), "Profile saved.", Toast.LENGTH_SHORT);
                 toast.show();
                 finish();
