@@ -194,6 +194,8 @@ public class MakeOrderActivity extends AppCompatActivity {
                         jsonObject.put("longitude", mLatLng.longitude);
                         jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
                         jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
+                        jsonObject.put("id_runner", user.getUid());
+                        jsonObject.put("id_partner", "");
                         jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
                         //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
                         jsonObject.put("phone_partner", "");
