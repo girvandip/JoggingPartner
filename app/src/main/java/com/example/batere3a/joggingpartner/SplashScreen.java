@@ -1,5 +1,7 @@
 package com.example.batere3a.joggingpartner;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
