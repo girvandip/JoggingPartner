@@ -34,7 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        app:menu_icon="@drawable/menu">
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/pedometerButton"
             android:layout_width="wrap_content"

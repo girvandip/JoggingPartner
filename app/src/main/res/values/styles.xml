@@ -17,6 +17,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
         <item name="colorAccent">@color/colorAccentGreen</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="fab_colorNormal">@color/colorPrimaryGreen</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDarkGreen</item>
+        <item name="menu_colorNormal">@color/colorPrimaryGreen</item>
+        <item name="menu_colorPressed">@color/colorPrimaryDarkGreen</item>
     </style>
 
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -25,6 +29,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
         <item name="colorAccent">@color/colorAccentOrange</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="fab_colorNormal">@color/colorPrimaryOrange</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDarkOrange</item>
+        <item name="menu_colorNormal">@color/colorPrimaryOrange</item>
+        <item name="menu_colorPressed">@color/colorPrimaryDarkOrange</item>
     </style>
 
     <style name="AppThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -33,6 +41,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
         <item name="colorAccent">@color/colorAccentBlue</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="fab_colorNormal">@color/colorPrimaryBlue</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDarkBlue</item>
+        <item name="menu_colorNormal">@color/colorPrimaryBlue</item>
+        <item name="menu_colorPressed">@color/colorPrimaryDarkBlue</item>
     </style>
 
 

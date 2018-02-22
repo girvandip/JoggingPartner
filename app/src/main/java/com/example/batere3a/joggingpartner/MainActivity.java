@@ -106,8 +106,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        com.github.clans.fab.FloatingActionButton fab1 = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.chatButton);
-        fab1.setOnClickListener(new View.OnClickListener() {
+        com.github.clans.fab.FloatingActionButton fabChat = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.chatButton);
+        fabChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent
+                        (MainActivity.this, ChatActivity.class));
+            }
+        });
+
+        com.github.clans.fab.FloatingActionButton fabPedometer = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.pedometerButton);
+        fabPedometer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -115,21 +124,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        com.github.clans.fab.FloatingActionButton fab2 = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.pedometerButton);
-        fab2.setOnClickListener(new View.OnClickListener() {
+        com.github.clans.fab.FloatingActionButton fabOrder = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.makeOrderButton);
+        fabOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        com.github.clans.fab.FloatingActionButton fab3 = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.makeOrderButton);
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent
+                        (MainActivity.this, MakeOrderActivity.class));
             }
         });
 
