@@ -9,6 +9,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
@@ -24,12 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
+import com.example.batere3a.joggingpartner.order.OrderDetails;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -180,7 +183,18 @@ public class MakeOrderActivity extends AppCompatActivity {
                     conn.setDoInput(true);
                     //Log.i("ASDF", "MASUK6");
                     conn.connect();
-                    //Log.i("ASDF", "MASUK3");
+
+
+                    String iid = InstanceID.getInstance(MakeOrderActivity.this).getId();
+                    String authorizedEntity = "82905626474"; // Project id from Google Developer Console
+                    String scope = "GCM"; // e.g. communicating using GCM, but you can use any
+                    // URL-safe characters up to a maximum of 1000, or
+                    // you can also leave it blank.
+                    String GCMToken = InstanceID.getInstance(MakeOrderActivity.this)
+                            .getToken(authorizedEntity, scope);
+
+                    Log.d("GCM instance id", iid);
+                    Log.d("GCM token id", GCMToken);
 
                     String json = "";
                     JSONObject jsonObject = new JSONObject();
@@ -196,7 +210,7 @@ public class MakeOrderActivity extends AppCompatActivity {
                     //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
                     jsonObject.put("phone_partner", "");
                     jsonObject.put("status", "Open");
-                    //Log.i("ASDF", "MASUK");
+                    jsonObject.put("gcm_token_runner", GCMToken);
                     Log.i("JSON", jsonObject.toString());
 
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());

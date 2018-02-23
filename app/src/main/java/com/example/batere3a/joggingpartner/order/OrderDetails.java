@@ -46,6 +46,7 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor proximitySensor;
     private String orderStatus;
+    private String GCMToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +146,11 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                     String scope = "GCM"; // e.g. communicating using GCM, but you can use any
                     // URL-safe characters up to a maximum of 1000, or
                     // you can also leave it blank.
-                    String token = InstanceID.getInstance(OrderDetails.this)
+                    GCMToken = InstanceID.getInstance(OrderDetails.this)
                             .getToken(authorizedEntity, scope);
 
                     Log.d("GCM instance id", iid);
-                    Log.d("GCM token id", token);
+                    Log.d("GCM token id", GCMToken);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -231,6 +232,7 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                             preferences.getString("userName", ""));
                     jsonObject.put("phone_partner",
                             preferences.getString("userPhone", ""));
+                    jsonObject.put("gcm_token_partner", GCMToken);
                     Log.i("order details", jsonObject.toString());
 
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
