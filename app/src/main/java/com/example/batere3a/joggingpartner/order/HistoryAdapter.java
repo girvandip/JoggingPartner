@@ -1,8 +1,6 @@
 package com.example.batere3a.joggingpartner.order;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONArray;
@@ -18,16 +15,17 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+
 /**
- * Created by Aldrich on 2/15/2018.
+ * Created by adity on 2/23/2018.
  */
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.OrderViewHolder>{
     private final String username;
     private JSONArray orderDataArray = null;
     private JSONArray orderIdArray = null;
 
-    public OrderListAdapter(String username, String data) {
+    public HistoryAdapter(String data, String username) {
         try {
             JSONObject orderData = new JSONObject(data);
             orderIdArray = orderData.names();
@@ -46,7 +44,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             i = 0;
             while(i < orderDataArray.length()){
                 if (((JSONObject) orderDataArray.get(i)).getString("status")
-                        .equals("Completed")) {
+                        .equals("Progress")) {
                     orderDataArray.remove(i);
                     orderIdArray.remove(i);
                 } else {
@@ -71,7 +69,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     }
 
     @Override
-    public OrderListAdapter.OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoryAdapter.OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.orderlist_item, parent, false);
         view.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +78,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
                 Intent intent = new Intent(view.getContext(), OrderDetails.class);
 
                 String data = ((TextView)view.findViewById(R.id.json_container))
-                                .getText().toString();
+                        .getText().toString();
                 intent.putExtra("data", data);
 
                 data = ((TextView)view.findViewById(R.id.order_id))
@@ -90,11 +88,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
             }
         });
-        return new OrderViewHolder(view, this);
+        return new HistoryAdapter.OrderViewHolder(view, this);
     }
 
     @Override
-    public void onBindViewHolder(OrderListAdapter.OrderViewHolder holder, int position) {
+    public void onBindViewHolder(HistoryAdapter.OrderViewHolder holder, int position) {
         try {
             JSONObject temp = (JSONObject) orderDataArray.get(position);
 
@@ -130,9 +128,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         public final TextView joggingPlace;
         public final TextView orderData;
         public final TextView orderId;
-        final OrderListAdapter mAdapter;
+        final HistoryAdapter mAdapter;
 
-        public OrderViewHolder(View itemView, OrderListAdapter adapter) {
+        public OrderViewHolder(View itemView, HistoryAdapter adapter) {
             super(itemView);
             partnerName = (TextView) itemView.findViewById(R.id.partner_name);
             orderTime = (TextView) itemView.findViewById(R.id.order_time);

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.batere3a.joggingpartner.order.OrderDetails">
+    tools:context="com.example.batere3a.joggingpartner.order.OrderDetails"
+    android:id="@+id/order_detail">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -133,7 +134,8 @@
             android:layout_marginStart="@dimen/large_margin"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
-            android:text="cancel" />
+            android:id="@+id/accept_button"
+            android:text="Accept" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,6 +150,17 @@
             android:id="@+id/data_intent_id"
             android:layout_below="@id/end_separator"
             android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/complete_button"
+            android:layout_below="@id/end_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Complete"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>
 

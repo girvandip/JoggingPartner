@@ -2,11 +2,12 @@ package com.example.batere3a.joggingpartner.order;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,10 @@ import java.util.LinkedList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OpenOrder extends Fragment {
+public class History extends Fragment {
     protected LinkedList<String> mWordList;
     protected RecyclerView recyclerView;
-    protected OpenOrderAdapter orderListAdapter;
+    protected HistoryAdapter historyAdapter;
     protected RecyclerView.LayoutManager layoutManager;
 
     private enum LayoutManagerType {
@@ -30,37 +31,35 @@ public class OpenOrder extends Fragment {
         LINEAR_LAYOUT_MANAGER
     }
 
-    protected OpenOrder.LayoutManagerType mCurrentLayoutManagerType;
+    protected History.LayoutManagerType mCurrentLayoutManagerType;
 
-    public OpenOrder() {
+    public History() {
         mWordList = new LinkedList<>();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_open_order, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_orders, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.open_order_recyclerview);
-        Log.d("test", recyclerView.toString());
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
 
         layoutManager = new LinearLayoutManager(getActivity());
 
         // set layout manager
-        mCurrentLayoutManagerType = OpenOrder.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+        mCurrentLayoutManagerType = History.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         // initialize the adapter with data from bundle
-        orderListAdapter = new OpenOrderAdapter(getArguments().getString("data"),
-                getArguments().getString("username"), getArguments().getString("id"));
-        recyclerView.setAdapter(orderListAdapter);
+        historyAdapter = new HistoryAdapter(getArguments().getString("data"),
+                getArguments().getString("username"));
+        recyclerView.setAdapter(historyAdapter);
 
         // Inflate the layout for this fragment
         return rootView;
     }
 
-    public void setRecyclerViewLayoutManager(OpenOrder.LayoutManagerType layoutManagerType) {
+    public void setRecyclerViewLayoutManager(History.LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
 
         // If a layout manager has already been set, get current scroll position.
@@ -72,19 +71,18 @@ public class OpenOrder extends Fragment {
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER:
                 layoutManager = new GridLayoutManager(getActivity(), 2);
-                mCurrentLayoutManagerType = OpenOrder.LayoutManagerType.GRID_LAYOUT_MANAGER;
+                mCurrentLayoutManagerType = History.LayoutManagerType.GRID_LAYOUT_MANAGER;
                 break;
             case LINEAR_LAYOUT_MANAGER:
                 layoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = OpenOrder.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                mCurrentLayoutManagerType = History.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
                 break;
             default:
                 layoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = OpenOrder.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                mCurrentLayoutManagerType = History.LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(scrollPosition);
     }
-
 }

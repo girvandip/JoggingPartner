@@ -21,7 +21,6 @@ import java.util.LinkedList;
  * A simple {@link Fragment} subclass.
  */
 public class Orders extends Fragment {
-    protected LinkedList<String> mWordList;
     protected RecyclerView recyclerView;
     protected OrderListAdapter orderListAdapter;
     protected RecyclerView.LayoutManager layoutManager;
@@ -35,13 +34,6 @@ public class Orders extends Fragment {
 
 
     public Orders() {
-        // Pull data from database
-        mWordList = new LinkedList<>();
-
-        // initiate linked list
-        for(int i = 0; i < 5; i++){
-            mWordList.addLast("" + i);
-        }
 
     }
 
@@ -60,7 +52,8 @@ public class Orders extends Fragment {
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         // initialize the adapter with data from bundle
-        orderListAdapter = new OrderListAdapter(mWordList, getArguments().getString("data"));
+        orderListAdapter = new OrderListAdapter(getArguments().getString("username"),
+                getArguments().getString("data"));
         recyclerView.setAdapter(orderListAdapter);
 
         // Inflate the layout for this fragment
@@ -97,7 +90,7 @@ public class Orders extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Orders");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Orders");
     }
 
 }
