@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.github.clans.fab.FloatingActionButton;
 
 import com.example.batere3a.joggingpartner.order.PagerAdapter;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private FirebaseAuth mAuth;
@@ -213,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
         // fetch data and print it to screen
-
     }
 
     @Override

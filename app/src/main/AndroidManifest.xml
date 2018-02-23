@@ -99,6 +99,8 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="OPEN_ACTIVITY_1" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
         <service
@@ -108,6 +110,20 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.example.batere3a.joggingpartner.notif.FirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.android.c2dn.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.example.batere3a.joggingpartner.notif.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <!--<service-->
             <!--android:name="gcm.play.android.samples.com.gcmquickstart.RegistrationIntentService"-->
             <!--android:exported="false">-->

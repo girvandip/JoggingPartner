@@ -11,31 +11,27 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.example.batere3a.joggingpartner.MainActivity;
-import com.example.batere3a.joggingpartner.MakeOrderActivity;
 import com.example.batere3a.joggingpartner.R;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -141,15 +137,12 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
-                    String iid = InstanceID.getInstance(OrderDetails.this).getId();
-                    String authorizedEntity = "82905626474"; // Project id from Google Developer Console
-                    String scope = "GCM"; // e.g. communicating using GCM, but you can use any
-                    // URL-safe characters up to a maximum of 1000, or
-                    // you can also leave it blank.
-                    GCMToken = InstanceID.getInstance(OrderDetails.this)
-                            .getToken(authorizedEntity, scope);
+//                    InstanceID iid = InstanceID.getInstance(OrderDetails.this);
+//                    String authorizedEntity = "82905626474"; // Project id from Google Developer Console
+//                    GCMToken = iid.getToken(getString(R.string.gcm_defaultSenderId),
+//                            GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                    GCMToken = FirebaseInstanceId.getInstance().getToken();
 
-                    Log.d("GCM instance id", iid);
                     Log.d("GCM token id", GCMToken);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -243,6 +236,38 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                     Log.i("MSG", conn.getResponseMessage());
 
                     conn.disconnect();
+
+                    /////////////////////////////
+                    JSONObject message = new JSONObject();
+                    message.put("to", "/topics/" + dataId);
+                    message.put("data", new JSONObject()
+                            .put("title", "Notification")
+                            .put("message", "You found a partner!")
+                    );
+
+                    api = "https://fcm.googleapis.com/fcm/send";
+                    url = new URL(api);
+                    conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("Authorization",
+                            "key=AAAAE02Pd2o:APA91bE5vf21y1ltyNMWlgHFoUKhVmTWb1lyPGE_MOjkLsOqyEOCfuccGdxO0S41_CIlWg0JGoqum4lYRVrfBSwIWDDUaHhwwZK2LeZSvkL1n7eXD0rj1A9Hkxq97GzFFVaMT1JEJgQe");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    json = message.toString();
+
+                    os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(json);
+                    os.flush();
+                    os.close();
+                    Log.i("FIRB STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("FIRB MSG", conn.getResponseMessage());
+                    Log.d("message", json);
+
+                    conn.disconnect();
+
                 } catch (Exception e) {
                     Log.e("Error", "ERROR JSON EXCEPTION");
                     e.printStackTrace();
