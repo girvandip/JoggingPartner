@@ -101,6 +101,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        SharedPreferences preferences = android.preference.PreferenceManager
+                .getDefaultSharedPreferences(ProfileActivity.this);
+        //get current token
+        String mUserId = preferences.getString("userId", "test");
+        TextView result = findViewById(R.id.resultProfile);
+        result.setText(mUserId);
+        Log.d("userId",mUserId);
+
         Button saveButton = (Button) findViewById(R.id.SaveButton);
 
         //Putting data into edit text

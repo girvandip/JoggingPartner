@@ -43,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
     public void clearPreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+        editor.remove("userId");
+        editor.remove("userName");
+        editor.remove("userEmail");
+        editor.remove("userPhone");
         editor.commit();
     }
     @Override
@@ -80,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+     
 
         com.github.clans.fab.FloatingActionButton fabChat = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.chatButton);
         fabChat.setOnClickListener(new View.OnClickListener() {

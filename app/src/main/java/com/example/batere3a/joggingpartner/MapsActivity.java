@@ -194,6 +194,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             (MapsActivity.this, MakeOrderActivity.class);
                     intentBackToMakeOrder.putExtra("bundleFromMaps", args);
                     startActivity(intentBackToMakeOrder);
+                    finish();
                 } else {
                     Toast.makeText
                             (MapsActivity.this, "Please insert your a location"

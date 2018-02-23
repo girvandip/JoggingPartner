@@ -62,8 +62,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".MakeOrderActivity"></activity>
+            android:label="@string/title_activity_maps">
+        </activity>
+        <activity
+            android:name=".MakeOrderActivity"
+            android:label="@string/makeOrder"
+            android:theme="@style/AppThemeWithActionBar">
+        </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
