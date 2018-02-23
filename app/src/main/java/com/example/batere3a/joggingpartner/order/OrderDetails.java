@@ -238,14 +238,12 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
                     conn.disconnect();
 
-
-                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/" + dataId);
                     /////////////////////////////
                     JSONObject message = new JSONObject();
                     message.put("to", "/topics/" + dataId);
                     message.put("data", new JSONObject()
-                            .put("title", "Notification")
-                            .put("message", "You found a partner!")
+                            .put("title", "You found a partner!")
+                            .put("message", preferences.getString("userName", ""))
                     );
 
                     api = "https://fcm.googleapis.com/fcm/send";

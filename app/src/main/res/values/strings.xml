@@ -121,4 +121,6 @@
     <string name="makeOrder">Make Order</string>
     <string name="loginTextHeader">Join us</string>
     <string name="loginTextSubHeader">for experiencing exciting moment !</string>
+    <string name="notifications_admin_channel_name">Notification Oreo</string>
+    <string name="notifications_admin_channel_description">You have found a partner oreo</string>
 </resources>
