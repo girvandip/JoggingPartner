@@ -6,41 +6,62 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
-
 /**
  * Created by Aldrich on 2/15/2018.
  */
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
-    private final LinkedList<String> mWordList;
+    private final String username;
     private JSONArray orderDataArray = null;
     private JSONArray orderIdArray = null;
 
-    public OrderListAdapter(LinkedList<String> orderList, String data) {
+    public OrderListAdapter(String username, String data) {
         try {
             JSONObject orderData = new JSONObject(data);
             orderIdArray = orderData.names();
             orderDataArray = orderData.toJSONArray(orderIdArray);
-            for (int i = 0; i < orderDataArray.length(); i++) {
-                if (((JSONObject) orderDataArray.get(i))
-                        .getString("status")
-                        .equals("completed")) {
+            int i = 0;
+            while(i < orderDataArray.length()){
+                if (!((JSONObject) orderDataArray.get(i)).getString("runner")
+                        .equals(username) && !((JSONObject) orderDataArray.get(i))
+                        .getString("partner").equals(username)) {
                     orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
+                }
+            }
+            i = 0;
+            while(i < orderDataArray.length()){
+                if (((JSONObject) orderDataArray.get(i)).getString("status")
+                        .equals("Completed")) {
+                    orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
+                }
+            }
+            i = 0;
+            while(i < orderDataArray.length()){
+                if (((JSONObject) orderDataArray.get(i)).getString("status")
+                        .equals("Open")) {
+                    orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        this.mWordList = orderList;
+        this.username = username;
     }
 
     @Override
@@ -50,8 +71,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),
-                        "you click on an order", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), OrderDetails.class);
 
                 String data = ((TextView)view.findViewById(R.id.json_container))
@@ -73,7 +92,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         try {
             JSONObject temp = (JSONObject) orderDataArray.get(position);
 
-            holder.partnerName.setText(temp.getString("runner"));
+            if(username.equals(temp.getString("runner"))){
+                holder.partnerName.setText(temp.getString("partner"));
+            } else {
+                holder.partnerName.setText(temp.getString("runner"));
+            }
+
 
             String dateTime = temp.getString("date")
                     + " " + temp.getString("time");

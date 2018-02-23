@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000000"
-    android:padding="15dp"
+    android:background="#373766"
     android:gravity="center"
+    android:orientation="vertical"
+    android:padding="15dp"
     tools:context="com.example.batere3a.joggingpartner.SplashScreen">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/jogging_partner_logo"
-        android:layout_gravity="center"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="false"
+        android:src="@drawable/jogging_partner_logo_new"
+        android:visibility="visible" />
 </LinearLayout>

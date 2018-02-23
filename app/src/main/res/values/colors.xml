@@ -17,4 +17,5 @@
     <color name="colorPrimaryDarkBlue">#00B8D4</color>
     <color name="colorPrimaryBlue">#00E5FF</color>
     <color name="colorAccentBlue">#18FFFF</color>
+    <color name="SelectedTab">#696969</color>
 </resources>

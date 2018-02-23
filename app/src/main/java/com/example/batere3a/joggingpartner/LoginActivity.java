@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -75,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     private String userName;
     private String userEmail;
     private String userPhone;
+    private String userNickname;
 
     private static final int RC_SIGN_IN = 1;
 
@@ -85,22 +88,14 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("userName", userName);
         editor.putString("userEmail", userEmail);
         editor.putString("userPhone", userPhone);
+        editor.putString("userNickname", userNickname);
         editor.commit();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "Green");
-        if(storedTheme.equals("Green")) {
-            setTheme(R.style.AppThemeGreen);
-        } else if(storedTheme.equals("Orange")) {
-            setTheme(R.style.AppThemeOrange);
-        } else {
-            setTheme(R.style.AppThemeBlue);
-        }
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -218,10 +213,11 @@ public class LoginActivity extends AppCompatActivity {
                                 userName = userData.getDisplayName();
                                 userEmail = userData.getEmail();
                                 userPhone = userInformation.getString("Phone");
-                                saveUserPreferences();
+                                userNickname = userInformation.getString("Nickname");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            saveUserPreferences();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

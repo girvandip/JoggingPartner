@@ -2,6 +2,7 @@ package com.example.batere3a.joggingpartner;
 
 import android.*;
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -12,16 +13,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityEventSource;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -30,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -117,6 +122,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
@@ -191,6 +198,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             (MapsActivity.this, MakeOrderActivity.class);
                     intentBackToMakeOrder.putExtra("bundleFromMaps", args);
                     startActivity(intentBackToMakeOrder);
+                    finish();
                 } else {
                     Toast.makeText
                             (MapsActivity.this, "Please insert your a location"
@@ -332,6 +340,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    private void hideHardKeyboard() {
+        InputMethodManager inputManager =
+                (InputMethodManager) this.
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(
+                this.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     /*
         --------------------------- google places API autocomplete suggestions -----------------
      */
@@ -347,6 +364,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            hideHardKeyboard();
         }
     };
 
@@ -395,6 +413,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             places.release();
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                String dateText = "";
+                String timeText = "";
+                Bundle bundle = getIntent().getParcelableExtra("bundleFromMakeOrder");
+                if (bundle != null) {
+                    dateText = bundle.getString("dateText");
+                    timeText = bundle.getString("timeText");
+                }
+                Bundle args = new Bundle();
+                args.putParcelable("latLngLocation", mLatlng);
+                args.putString("locationName", mLocationName);
+                args.putString("addressName", mAddressName);
+                args.putString("dateText", dateText);
+                args.putString("timeText", timeText);
+                Intent intentBackToMakeOrder = new Intent
+                        (MapsActivity.this, MakeOrderActivity.class);
+                intentBackToMakeOrder.putExtra("bundleFromMaps", args);
+                startActivity(intentBackToMakeOrder);
+                finish();
+                break;
+        }
+        return true;
+    }
 
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
