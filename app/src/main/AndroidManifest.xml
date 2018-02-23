@@ -110,6 +110,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        
+        <service
+            android:name=".SensorService"
+            android:enabled="true" >
+        </service>
+
+        <receiver
+            android:name="SensorRestarterBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+            <intent-filter>
+                <action android:name=".RestartSensor"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
