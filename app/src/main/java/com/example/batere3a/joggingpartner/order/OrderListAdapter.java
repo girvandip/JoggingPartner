@@ -1,22 +1,16 @@
 package com.example.batere3a.joggingpartner.order;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.LinkedList;
 
 /**
  * Created by Aldrich on 2/15/2018.

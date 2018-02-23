@@ -30,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
+import com.example.batere3a.joggingpartner.notif.MyFirebaseMessageService;
+import com.example.batere3a.joggingpartner.order.OrderDetails;
 import com.example.batere3a.joggingpartner.pedometer.PedometerActivity;
 import com.example.batere3a.joggingpartner.pedometer.StepDetector;
 import com.google.android.gms.auth.api.Auth;
@@ -40,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.github.clans.fab.FloatingActionButton;
 
 import com.example.batere3a.joggingpartner.order.PagerAdapter;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.example.batere3a.joggingpartner.SensorService;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
 
+    // service
+    private MyFirebaseMessageService firebaseMessageService;
+    private Intent firebaseIntent;
     Intent mServiceIntent;
     private SensorService mSensorService;
 
@@ -283,6 +289,10 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MAINACT", "onDestroy!");
         super.onDestroy();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+        firebaseMessageService = new MyFirebaseMessageService();
+        firebaseIntent = new Intent(this, firebaseMessageService.getClass());
+        startService(firebaseIntent);
     }
 
     @Override

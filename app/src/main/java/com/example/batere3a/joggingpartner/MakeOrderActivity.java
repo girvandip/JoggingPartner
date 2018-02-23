@@ -6,10 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
-import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
@@ -19,7 +18,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,33 +26,20 @@ import android.widget.Toast;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class MakeOrderActivity extends AppCompatActivity {
 
@@ -157,6 +142,8 @@ public class MakeOrderActivity extends AppCompatActivity {
                 mAddressNameEditText.setText(mAddressName);
             }
         }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
     }
 
     /*
@@ -238,6 +225,21 @@ public class MakeOrderActivity extends AppCompatActivity {
                         os.close();
                         Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                         Log.i("MSG" , conn.getResponseMessage());
+                        
+                        // Get the response
+                        String json_response = "";
+                        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+                        BufferedReader br = new BufferedReader(in);
+                        String text;
+                        while ((text = br.readLine()) != null) {
+                            json_response += text;
+                        }
+                        Log.d("make order response", json_response);
+                        JSONObject orderId = new JSONObject(json_response);
+    
+                        // Make a topic with order ID
+                        FirebaseMessaging.getInstance()
+                                .subscribeToTopic("/topics/" + orderId.getString("name"));
 
                         conn.disconnect();
                         Intent intentToMain = new Intent(MakeOrderActivity.this, MainActivity.class);
