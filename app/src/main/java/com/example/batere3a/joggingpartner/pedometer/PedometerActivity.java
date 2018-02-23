@@ -1,10 +1,12 @@
 package com.example.batere3a.joggingpartner.pedometer;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,8 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
         theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedometer);
+        final SharedPreferences sharedPref = PreferenceManager
+                .getDefaultSharedPreferences(PedometerActivity.this);
 
         // Get an instance of the SensorManager
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -39,13 +43,14 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
         simpleStepDetector.registerListener(this);
 
         TvSteps = (TextView) findViewById(R.id.tv_steps);
+        numSteps = sharedPref.getInt("steps", 0);
+        TvSteps.setText("" + numSteps);
         Button BtnStart = (Button) findViewById(R.id.btn_start);
         Button BtnStop = (Button) findViewById(R.id.btn_stop);
         BtnStart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                numSteps = 0;
                 sensorManager.registerListener(PedometerActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
             }
         });
@@ -55,6 +60,8 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
 
             @Override
             public void onClick(View v) {
+                numSteps = 0;
+                TvSteps.setText("" + numSteps);
                 sensorManager.unregisterListener(PedometerActivity.this);
             }
         });
@@ -76,5 +83,11 @@ public class PedometerActivity extends AppCompatActivity implements SensorEventL
     public void step(long timeNs) {
         numSteps++;
         TvSteps.setText("" + numSteps);
+        SharedPreferences sharedPref = PreferenceManager
+                .getDefaultSharedPreferences(PedometerActivity.this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("steps", numSteps);
+        editor.commit();
     }
+
 }
