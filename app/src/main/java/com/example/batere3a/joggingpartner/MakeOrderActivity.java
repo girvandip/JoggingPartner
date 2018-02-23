@@ -69,6 +69,8 @@ public class MakeOrderActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
 
+    private Button buttonMakeOrder;
+
     private LatLng mLatLng;
 
     @Override
@@ -103,6 +105,17 @@ public class MakeOrderActivity extends AppCompatActivity {
         theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_order);
+        buttonMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "");
+        if(storedTheme.equals("Green")) {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.rounded_button_green));
+        } else if(storedTheme.equals("Orange")) {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.round_button_orange));
+        } else {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.rounded_button_blue));
+        }
 
         Toast.makeText(this, R.string.introductionMakeOrder, Toast.LENGTH_LONG).show();
 
