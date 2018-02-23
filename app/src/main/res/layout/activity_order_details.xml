@@ -11,20 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="Jogging ID. 12341239s"
-            app:titleTextColor="@android:color/white" />
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+            <!--app:title="Jogging ID. 12341239s"-->
+            <!--app:titleTextColor="@android:color/white" />-->
+
 
         <LinearLayout
             android:id="@+id/order_status_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
             android:orientation="vertical"
             android:padding="@dimen/large_margin">
 

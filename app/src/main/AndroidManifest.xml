@@ -67,7 +67,11 @@
         <activity
             android:name=".MakeOrderActivity"
             android:label="Make Order"
-            android:theme="@style/AppThemeWithActionBar">
+            android:theme="@style/AppThemeWithActionBar"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
 
         <activity

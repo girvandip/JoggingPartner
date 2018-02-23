@@ -28,6 +28,7 @@ import android.widget.Toolbar;
 import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.MakeOrderActivity;
 import com.example.batere3a.joggingpartner.R;
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 
 import org.json.JSONObject;
 
@@ -47,6 +48,9 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
 
@@ -59,9 +63,8 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
             TextView result = findViewById(R.id.data_intent);
             result.setText(data);
 
-            android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
             String title = "ID - " + dataId.substring(1);
-            toolbar.setTitle(title);
+            getSupportActionBar().setTitle(title);
 
             // bind the data
             TextView status = findViewById(R.id.order_status);
