@@ -2,6 +2,7 @@ package com.example.batere3a.joggingpartner;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +47,8 @@ public class MakeOrderActivity extends AppCompatActivity {
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
-    private TextView mLatlngTextView;
+    private ProgressDialog progressDialog;
+
     private EditText mDateText;
     private EditText mTimeText;
     private EditText mLocationNameEditText;
@@ -52,6 +56,8 @@ public class MakeOrderActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private FirebaseDatabase database;
+
+    private Button buttonMakeOrder;
 
     private LatLng mLatLng;
 
@@ -87,6 +93,21 @@ public class MakeOrderActivity extends AppCompatActivity {
         theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_order);
+        //progressDialog = new ProgressDialog(this);
+        //progressDialog.setMessage("Please wait ...");
+        buttonMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "");
+        if(storedTheme.equals("Green")) {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.rounded_button_green));
+        } else if(storedTheme.equals("Orange")) {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.round_button_orange));
+        } else {
+            buttonMakeOrder.setBackground(getResources().getDrawable(R.drawable.rounded_button_blue));
+        }
+
+        Toast.makeText(this, R.string.introductionMakeOrder, Toast.LENGTH_LONG).show();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -94,8 +115,6 @@ public class MakeOrderActivity extends AppCompatActivity {
         mTimeText = (EditText) findViewById(R.id.timeText);
         mLocationNameEditText = (EditText) findViewById(R.id.mapText);
         mAddressNameEditText = (EditText) findViewById(R.id.addressText);
-
-        mLatlngTextView = (TextView) findViewById(R.id.latlngText);
 
         database = FirebaseDatabase.getInstance();
 
@@ -149,70 +168,93 @@ public class MakeOrderActivity extends AppCompatActivity {
     */
 
     public void saveOrderToDatabase(View view) throws IOException {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    SharedPreferences preferences = PreferenceManager
-                            .getDefaultSharedPreferences(MakeOrderActivity.this);
-                    URL url = new URL("https://android-544df.firebaseio.com/Orders.json");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    //Log.i("ASDF", "MASUK4");
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept","application/json");
-                    //Log.i("ASDF", "MASUK5");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-                    //Log.i("ASDF", "MASUK6");
-                    conn.connect();
+        if ((TextUtils.isEmpty(mDateText.getText().toString().trim())) ||
+                (TextUtils.isEmpty(mTimeText.getText().toString().trim())) ||
+                (TextUtils.isEmpty(mLocationNameEditText.toString().trim()))) {
+            Toast.makeText(this, R.string.doNotMeetRequirementMakeOrder, Toast.LENGTH_SHORT).show();
+        } else {
+            //progressDialog.show();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        /*
+                        MakeOrderActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.show();
+                            }
+                        })*/
+                        SharedPreferences preferences = PreferenceManager
+                                .getDefaultSharedPreferences(MakeOrderActivity.this);
+                        URL url = new URL("https://android-544df.firebaseio.com/Orders.json");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        //Log.i("ASDF", "MASUK4");
+                        conn.setRequestMethod("POST");
+                        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                        conn.setRequestProperty("Accept","application/json");
+                        //Log.i("ASDF", "MASUK5");
+                        conn.setDoOutput(true);
+                        conn.setDoInput(true);
+                        //Log.i("ASDF", "MASUK6");
+                        conn.connect();
+                        //Log.i("ASDF", "MASUK3");
 
-                    String json = "";
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("runner", user.getDisplayName());
-                    jsonObject.put("partner", "");
-                    jsonObject.put("date", mDateText.getText().toString().trim());
-                    jsonObject.put("time", mTimeText.getText().toString().trim());
-                    jsonObject.put("latitude", mLatLng.latitude);
-                    jsonObject.put("longitude", mLatLng.longitude);
-                    jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
-                    jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
-                    jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
-                    //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
-                    jsonObject.put("phone_partner", "");
-                    jsonObject.put("status", "Open");
-                    Log.i("JSON", jsonObject.toString());
+                        String json = "";
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("runner", user.getDisplayName());
+                        jsonObject.put("partner", "");
+                        jsonObject.put("date", mDateText.getText().toString().trim());
+                        jsonObject.put("time", mTimeText.getText().toString().trim());
+                        jsonObject.put("latitude", mLatLng.latitude);
+                        jsonObject.put("longitude", mLatLng.longitude);
+                        jsonObject.put("location", mLocationNameEditText.getText().toString().trim());
+                        jsonObject.put("address", mAddressNameEditText.getText().toString().trim());
+                        jsonObject.put("id_runner", user.getUid());
+                        jsonObject.put("id_partner", "");
+                        jsonObject.put("phone_runner", preferences.getString("userPhone", ""));
+                        //Log.i("PHONERUNNER", preferences.getString("userPhone", ""));
+                        jsonObject.put("phone_partner", "");
+                        jsonObject.put("status", "Open");
+                        //Log.i("ASDF", "MASUK");
+                        Log.i("JSON", jsonObject.toString());
 
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(jsonObject.toString());
-                    os.flush();
-                    os.close();
-                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
-                    Log.i("MSG" , conn.getResponseMessage());
+                        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                        os.writeBytes(jsonObject.toString());
+                        os.flush();
+                        os.close();
+                        Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                        Log.i("MSG" , conn.getResponseMessage());
+                        
+                        // Get the response
+                        String json_response = "";
+                        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+                        BufferedReader br = new BufferedReader(in);
+                        String text;
+                        while ((text = br.readLine()) != null) {
+                            json_response += text;
+                        }
+                        Log.d("make order response", json_response);
+                        JSONObject orderId = new JSONObject(json_response);
+    
+                        // Make a topic with order ID
+                        FirebaseMessaging.getInstance()
+                                .subscribeToTopic("/topics/" + orderId.getString("name"));
 
-                    // Get the response
-                    String json_response = "";
-                    InputStreamReader in = new InputStreamReader(conn.getInputStream());
-                    BufferedReader br = new BufferedReader(in);
-                    String text;
-                    while ((text = br.readLine()) != null) {
-                        json_response += text;
+                        conn.disconnect();
+                        Intent intentToMain = new Intent(MakeOrderActivity.this, MainActivity.class);
+                        intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intentToMain);
+                        finish();
+                    } catch (Exception e) {
+                        Log.e("Error", "ERROR JSON EXCEPTION");
+                        e.printStackTrace();
                     }
-                    Log.d("make order response", json_response);
-                    JSONObject orderId = new JSONObject(json_response);
-
-                    // Make a topic with order ID
-                    FirebaseMessaging.getInstance()
-                            .subscribeToTopic("/topics/" + orderId.getString("name"));
-
-                    conn.disconnect();
-                } catch (Exception e) {
-                    Log.e("Error", "ERROR JSON EXCEPTION");
-                    e.printStackTrace();
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+            //progressDialog.dismiss();
+        }
     }
 
     private void init(){

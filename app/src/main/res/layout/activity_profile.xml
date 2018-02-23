@@ -112,10 +112,11 @@
                 android:text="Save"
                 android:layout_centerHorizontal="true"/>
             <TextView
+                android:id="@+id/resultProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/SaveButton"
-                android:id="@+id/resultProfile" />
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

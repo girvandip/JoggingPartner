@@ -1,9 +1,11 @@
 package com.example.batere3a.joggingpartner;
 
 import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.Toast;
 

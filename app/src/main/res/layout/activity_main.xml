@@ -6,19 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.batere3a.joggingpartner.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--app:titleTextColor="@android:color/white"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         app:tabTextAppearance="@style/CustomTabTextAppearance"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -29,42 +28,34 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout" />
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        app:menu_icon="@drawable/menu"
+        >
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/pedometerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/foot"/>
+            android:src="@drawable/foot"
+            app:fab_label="Count your steps!"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/chatButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/chat"/>
+            android:src="@drawable/chat"
+            app:fab_label="Chat with others!"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/makeOrderButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/my_orders"/>
+            android:src="@drawable/my_orders"
+            app:fab_label="Find a partner!"/>
     </com.github.clans.fab.FloatingActionMenu>
-
-    <include layout="@layout/content_main" />
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
-
 
 <TextView
         android:layout_width="wrap_content"

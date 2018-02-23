@@ -35,18 +35,20 @@ public class ChatActivity extends AppCompatActivity {
 
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance()
-                        .getReference()
-                        .child("Chats")
-                        .push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+                if(!input.getText().toString().equals("")) {
+                    FirebaseDatabase.getInstance()
+                            .getReference()
+                            .child("Chats")
+                            .push()
+                            .setValue(new ChatMessage(input.getText().toString(),
+                                    FirebaseAuth.getInstance()
+                                            .getCurrentUser()
+                                            .getDisplayName())
+                            );
 
-                // Clear the input
-                input.setText("");
+                    // Clear the input
+                    input.setText("");
+                }
             }
         });
         // Load chat room contents

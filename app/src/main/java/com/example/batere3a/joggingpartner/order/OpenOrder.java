@@ -53,7 +53,7 @@ public class OpenOrder extends Fragment {
 
         // initialize the adapter with data from bundle
         orderListAdapter = new OpenOrderAdapter(getArguments().getString("data"),
-                getArguments().getString("username"));
+                getArguments().getString("username"), getArguments().getString("id"));
         recyclerView.setAdapter(orderListAdapter);
 
         // Inflate the layout for this fragment

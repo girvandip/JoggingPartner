@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String userId;
     private String userData = null;
+    private TextView result;
 
     public void patchUser(final String uid, final String nickname, final String phone) {
         Thread thread = new Thread(new Runnable() {
@@ -75,32 +76,40 @@ public class ProfileActivity extends AppCompatActivity {
         //Change theme according to prefererence
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
         //Access user Id
         final SharedPreferences sharedPref =
                 android.preference.PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
         userId = sharedPref.getString("userId","");
-        TextView result = findViewById(R.id.resultProfile);
+        Log.d("user", userId);
+        result = (TextView) findViewById(R.id.resultProfile);
+        Log.d("ASDFASDF", "OITOITOIT");
 
         //Get User Data
         String resource = "Users/" + userId;
+        Log.d("ASDFASDF", "OIT");
         final FetchData users = new FetchData(resource, "GET", result);
+        Log.d("ASDFASDF", "OITOIT");
         users.execute();
         String mPhone = "";
         String mNickname = "";
+        //Log.d("result", result.getText().toString());
         try {
             userData = users.get();
             JSONObject userJson = new JSONObject(userData);
             mPhone = userJson.getString("Phone");
             mNickname = userJson.getString("Nickname");
             Log.d("Sabeb", userData);
-            result.setText(userData);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        //get current token
+        String mUserId = sharedPref.getString("userId", "test");
+        result.setText(mUserId);
+        Log.d("userId",mUserId);
+
         Button saveButton = (Button) findViewById(R.id.SaveButton);
 
         //Putting data into edit text

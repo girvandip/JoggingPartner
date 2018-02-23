@@ -19,7 +19,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         app:fabSize="mini"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:src="@drawable/chatarrow"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -47,5 +48,7 @@
         android:divider="@android:color/transparent"
         android:id="@+id/list_of_messages"
         android:layout_marginBottom="16dp"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true" />
 </RelativeLayout>

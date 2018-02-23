@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.batere3a.joggingpartner.History;
-
 /**
  * Created by Aldrich on 2/15/2018.
  */
@@ -15,12 +13,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     private int numOfTabs;
     private String data;
     private String username;
+    private String id;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs, String data, String username) {
+    public PagerAdapter(FragmentManager fm, int numOfTabs, String data, String username, String id) {
         super(fm);
         this.numOfTabs = numOfTabs;
         this.data = data;
         this.username = username;
+        this.id = id;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putString("data", data);
         bundle.putString("username", username);
+        bundle.putString("id", id);
         switch(position){
             case 0:
                 Orders orders = new Orders();
@@ -43,7 +44,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 openOrder.setArguments(bundle);
                 return openOrder;
             case 2:
-                return new History();
+                History history = new History();
+                history.setArguments(bundle);
+                return history;
             default:
                 return null;
         }

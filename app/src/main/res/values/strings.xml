@@ -118,9 +118,9 @@
     <string name="time_picker">timePicker</string>
     <string name="mapPickerHint">Pick your location</string>
     <string name="addressHint">This is your address</string>
-    <string name="makeOrder">Make Order</string>
+    <string name="makeOrder">Let\'s Run!</string>
     <string name="loginTextHeader">Join us</string>
-    <string name="loginTextSubHeader">for experiencing exciting moment !</string>
-    <string name="notifications_admin_channel_name">Notification Oreo</string>
-    <string name="notifications_admin_channel_description">You have found a partner oreo</string>
+    <string name="loginTextSubHeader">for an amazing jogging experience!</string>
+    <string name="introductionMakeOrder">Please fill Date, Time, and Location</string>
+    <string name="doNotMeetRequirementMakeOrder">You still have something blank</string>
 </resources>

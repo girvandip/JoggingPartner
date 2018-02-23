@@ -28,6 +28,7 @@ import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.R;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 
 import org.json.JSONObject;
 
@@ -47,6 +48,9 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
 
@@ -59,9 +63,8 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
             TextView result = findViewById(R.id.data_intent);
             result.setText(data);
 
-            android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
             String title = "ID - " + dataId.substring(1);
-            toolbar.setTitle(title);
+            getSupportActionBar().setTitle(title);
 
             // bind the data
             TextView status = findViewById(R.id.order_status);
@@ -98,8 +101,34 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                 Button acceptButton = findViewById(R.id.accept_button);
                 acceptButton.setVisibility(Button.GONE);
 
-                FloatingActionButton chatButton = findViewById(R.id.chat_button);
-                chatButton.setVisibility(FloatingActionButton.VISIBLE);
+                Button completeButton = findViewById(R.id.complete_button);
+                completeButton.setVisibility(Button.VISIBLE);
+            }
+
+            if (jsonData.getString("status").equals("Completed")) {
+                View separator = (View) findViewById(R.id.phone_separator);
+                separator.setVisibility(View.VISIBLE);
+
+                LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.partner_contact);
+                phoneLayout.setVisibility(LinearLayout.VISIBLE);
+
+                TextView partnerPhone = findViewById(R.id.partner_phone);
+                String phone = null;
+                SharedPreferences preferences = PreferenceManager
+                        .getDefaultSharedPreferences(OrderDetails.this);
+                if(jsonData.getString("partner")
+                        .equals(preferences.getString("userName", ""))){
+                    phone = jsonData.getString("phone_runner"); // user as the partner
+                } else {
+                    phone = jsonData.getString("phone_partner"); // user as the runner
+                }
+                partnerPhone.setText(phone);
+
+                Button acceptButton = findViewById(R.id.accept_button);
+                acceptButton.setVisibility(Button.GONE);
+
+                Button completeButton = findViewById(R.id.complete_button);
+                completeButton.setVisibility(Button.GONE);
             }
 
             TextView location = findViewById(R.id.order_place);
@@ -122,7 +151,24 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
                 try {
-                    saveOrderToDatabase();
+                    saveOrderToDatabaseOpen();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    Intent intent = new Intent(OrderDetails.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        Button completeButton = findViewById(R.id.complete_button);
+        completeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                try {
+                    saveOrderToDatabaseProgress();
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -201,8 +247,7 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void saveOrderToDatabase() throws IOException {
-        // TODO: push the GCM token
+    public void saveOrderToDatabaseOpen() throws IOException {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -222,6 +267,51 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                     String json = "";
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("status", "Progress");
+                    jsonObject.put("partner",
+                            preferences.getString("userName", ""));
+                    jsonObject.put("id_partner",
+                            preferences.getString("userId", ""));
+                    jsonObject.put("phone_partner",
+                            preferences.getString("userPhone", ""));
+                    Log.i("order details", jsonObject.toString());
+
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonObject.toString());
+                    os.flush();
+                    os.close();
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG", conn.getResponseMessage());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    Log.e("Error", "ERROR JSON EXCEPTION");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void saveOrderToDatabaseProgress() throws IOException {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SharedPreferences preferences = PreferenceManager
+                            .getDefaultSharedPreferences(OrderDetails.this);
+                    String api = "https://android-544df.firebaseio.com/Orders/" + dataId + ".json";
+                    URL url = new URL(api);
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("PATCH");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    String json = "";
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("status", "Completed");
                     jsonObject.put("partner",
                             preferences.getString("userName", ""));
                     jsonObject.put("phone_partner",

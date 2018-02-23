@@ -90,7 +90,7 @@ public class Orders extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Orders");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your Appointments");
     }
 
 }

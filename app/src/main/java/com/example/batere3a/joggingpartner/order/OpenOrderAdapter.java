@@ -2,6 +2,7 @@ package com.example.batere3a.joggingpartner.order;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,28 @@ public class OpenOrderAdapter extends RecyclerView.Adapter<OpenOrderAdapter.Orde
     private JSONArray orderDataArray = null;
     private JSONArray orderIdArray = null;
 
-    public OpenOrderAdapter(String data, String username) {
+    public OpenOrderAdapter(String data, String username, String id) {
         try {
             JSONObject orderData = new JSONObject(data);
             orderIdArray = orderData.names();
             orderDataArray = orderData.toJSONArray(orderIdArray);
             int i = 0;
+            while(i < orderDataArray.length()){
+                //Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_runner"));
+                //Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_partner"));
+                //Log.d("DebugIDRunner", id);
+                //Log.d("DebugIDRunner", String.valueOf(orderDataArray.length()));
+                if (((JSONObject) orderDataArray.get(i)).getString("id_runner")
+                        .equals(id) || ((JSONObject) orderDataArray.get(i))
+                        .getString("id_partner").equals(id)) {
+                    orderDataArray.remove(i);
+                    orderIdArray.remove(i);
+                } else {
+                    i++;
+                }
+            }
+
+            i = 0;
             while(i < orderDataArray.length()){
                 if (((JSONObject) orderDataArray.get(i)).getString("status")
                         .equals("Completed")) {
