@@ -2,6 +2,7 @@ package com.example.batere3a.joggingpartner;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +62,8 @@ public class MakeOrderActivity extends AppCompatActivity {
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
+    private ProgressDialog progressDialog;
+
     private EditText mDateText;
     private EditText mTimeText;
     private EditText mLocationNameEditText;
@@ -105,6 +108,8 @@ public class MakeOrderActivity extends AppCompatActivity {
         theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_order);
+        //progressDialog = new ProgressDialog(this);
+        //progressDialog.setMessage("Please wait ...");
         buttonMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(this);
@@ -181,10 +186,18 @@ public class MakeOrderActivity extends AppCompatActivity {
                 (TextUtils.isEmpty(mLocationNameEditText.toString().trim()))) {
             Toast.makeText(this, R.string.doNotMeetRequirementMakeOrder, Toast.LENGTH_SHORT).show();
         } else {
+            //progressDialog.show();
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        /*
+                        MakeOrderActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.show();
+                            }
+                        })*/
                         SharedPreferences preferences = PreferenceManager
                                 .getDefaultSharedPreferences(MakeOrderActivity.this);
                         URL url = new URL("https://android-544df.firebaseio.com/Orders.json");
@@ -238,6 +251,7 @@ public class MakeOrderActivity extends AppCompatActivity {
                 }
             });
             thread.start();
+            //progressDialog.dismiss();
         }
     }
 
