@@ -86,7 +86,7 @@ public class SensorService extends Service {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Thread.sleep(60000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

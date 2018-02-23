@@ -102,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
         mSensorService = new SensorService(getCtx());
         mServiceIntent = new Intent(getCtx(), mSensorService.getClass());
-        /*
+
         if (!isMyServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
         }
-        */
+
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent
                         (MainActivity.this, MakeOrderActivity.class));
+                Toast.makeText
+                        (MainActivity.this, R.string.introductionMakeOrder,
+                                Toast.LENGTH_LONG).show();
             }
         });
 
@@ -194,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(MainActivity.this);
         String username = preferences.getString("userName", "");
         String id = preferences.getString("userId", "");
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount(), userData, username, id);
         viewPager.setAdapter(adapter);
 
@@ -225,37 +228,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        /*
+
         if (mSensorService.userDataString != null) {
-            super.onResume();
             // Create an instance of the tab layout from the view.
-            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-            // Set the text for each tab.
-            tabLayout.addTab(tabLayout.newTab()
-                    .setText(R.string.orders).setIcon(R.drawable.my_orders));
-            tabLayout.addTab(tabLayout.newTab()
-                    .setText(R.string.openorder).setIcon(R.drawable.openorder));
-            tabLayout.addTab(tabLayout.newTab()
-                    .setText(R.string.history).setIcon(R.drawable.history));
-            // Set the tabs to fill the entire layout.
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+            final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
             // Using PagerAdapter to manage page views in fragments.
             // Each page is represented by its own fragment.
+            // get the name
+            SharedPreferences preferences = PreferenceManager
+                    .getDefaultSharedPreferences(MainActivity.this);
+            String username = preferences.getString("userName", "");
+            String id = preferences.getString("userId", "");
             viewPager = (ViewPager) findViewById(R.id.pager);
             adapter = new PagerAdapter
-                    (getSupportFragmentManager(), tabLayout.getTabCount(),
-                            mSensorService.userDataString);
+                    (getSupportFragmentManager(),
+                            tabLayout.getTabCount(), mSensorService.userDataString, username, id);
             viewPager.setAdapter(adapter);
 
             // Setting a listener for clicks.
+            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.SelectedTab));
             viewPager.addOnPageChangeListener(new
                     TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     viewPager.setCurrentItem(tab.getPosition());
-                    ((Toolbar) findViewById(R.id.toolbar)).setTitle(tab.getText());
+                    getSupportActionBar().setTitle(tab.getText());
+                    tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.SelectedTab));
                 }
 
                 @Override
@@ -268,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        */
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
