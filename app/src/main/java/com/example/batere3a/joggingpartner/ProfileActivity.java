@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String userId;
     private String userData = null;
+    private TextView result;
 
     public void patchUser(final String uid, final String nickname, final String phone) {
         Thread thread = new Thread(new Runnable() {
@@ -80,21 +81,25 @@ public class ProfileActivity extends AppCompatActivity {
         final SharedPreferences sharedPref =
                 android.preference.PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
         userId = sharedPref.getString("userId","");
-        TextView result = findViewById(R.id.resultProfile);
+        Log.d("user", userId);
+        result = (TextView) findViewById(R.id.resultProfile);
+        Log.d("ASDFASDF", "OITOITOIT");
 
         //Get User Data
         String resource = "Users/" + userId;
+        Log.d("ASDFASDF", "OIT");
         final FetchData users = new FetchData(resource, "GET", result);
+        Log.d("ASDFASDF", "OITOIT");
         users.execute();
         String mPhone = "";
         String mNickname = "";
+        Log.d("result", result.getText().toString());
         try {
             userData = users.get();
             JSONObject userJson = new JSONObject(userData);
             mPhone = userJson.getString("Phone");
             mNickname = userJson.getString("Nickname");
             Log.d("Sabeb", userData);
-            result.setText(userData);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,11 +107,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SharedPreferences preferences = android.preference.PreferenceManager
-                .getDefaultSharedPreferences(ProfileActivity.this);
         //get current token
-        String mUserId = preferences.getString("userId", "test");
-        TextView result = findViewById(R.id.resultProfile);
+        String mUserId = sharedPref.getString("userId", "test");
         result.setText(mUserId);
         Log.d("userId",mUserId);
 
