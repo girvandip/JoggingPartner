@@ -13,12 +13,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     private int numOfTabs;
     private String data;
     private String username;
+    private String id;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs, String data, String username) {
+    public PagerAdapter(FragmentManager fm, int numOfTabs, String data, String username, String id) {
         super(fm);
         this.numOfTabs = numOfTabs;
         this.data = data;
         this.username = username;
+        this.id = id;
     }
 
     @Override
@@ -31,6 +33,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putString("data", data);
         bundle.putString("username", username);
+        bundle.putString("id", id);
         switch(position){
             case 0:
                 Orders orders = new Orders();

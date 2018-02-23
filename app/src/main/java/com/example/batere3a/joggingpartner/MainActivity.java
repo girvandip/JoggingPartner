@@ -137,9 +137,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager
                 .getDefaultSharedPreferences(MainActivity.this);
         String username = preferences.getString("userName", "");
+        String id = preferences.getString("userId", "");
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount(), userData, username);
+                (getSupportFragmentManager(), tabLayout.getTabCount(), userData, username, id);
         viewPager.setAdapter(adapter);
 
         // Setting a listener for clicks.
