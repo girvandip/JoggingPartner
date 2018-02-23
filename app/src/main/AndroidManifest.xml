@@ -62,7 +62,11 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".MakeOrderActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MakeOrderActivity" />
         </activity>
         <activity
             android:name=".MakeOrderActivity"

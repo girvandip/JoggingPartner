@@ -31,10 +31,10 @@ public class OpenOrderAdapter extends RecyclerView.Adapter<OpenOrderAdapter.Orde
             orderDataArray = orderData.toJSONArray(orderIdArray);
             int i = 0;
             while(i < orderDataArray.length()){
-                Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_runner"));
-                Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_partner"));
-                Log.d("DebugIDRunner", id);
-                Log.d("DebugIDRunner", String.valueOf(orderDataArray.length()));
+                //Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_runner"));
+                //Log.d("DebugIDRunner",((JSONObject) orderDataArray.get(i)).getString("id_partner"));
+                //Log.d("DebugIDRunner", id);
+                //Log.d("DebugIDRunner", String.valueOf(orderDataArray.length()));
                 if (((JSONObject) orderDataArray.get(i)).getString("id_runner")
                         .equals(id) || ((JSONObject) orderDataArray.get(i))
                         .getString("id_partner").equals(id)) {
@@ -44,7 +44,6 @@ public class OpenOrderAdapter extends RecyclerView.Adapter<OpenOrderAdapter.Orde
                     i++;
                 }
             }
-            Log.d("DebugIDRunner", String.valueOf(i));
 
             i = 0;
             while(i < orderDataArray.length()){
