@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Create an instance of the tab layout from the view.
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         // Set the text for each tab.
         tabLayout.addTab(tabLayout.newTab()
                 .setText(R.string.orders).setIcon(R.drawable.my_orders));
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         // Setting a listener for clicks.
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.SelectedTab));
         viewPager.addOnPageChangeListener(new
                 TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 getSupportActionBar().setTitle(tab.getText());
+                tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.SelectedTab));
             }
 
             @Override
