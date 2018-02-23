@@ -29,6 +29,7 @@
         <item name="fab_colorPressed">@color/colorPrimaryDarkGreen</item>
         <item name="menu_colorNormal">@color/colorPrimaryGreen</item>
         <item name="menu_colorPressed">@color/colorPrimaryDarkGreen</item>
+        <item name="colorButtonNormal">@color/colorPrimaryGreen</item>
     </style>
 
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -41,6 +42,7 @@
         <item name="fab_colorPressed">@color/colorPrimaryDarkOrange</item>
         <item name="menu_colorNormal">@color/colorPrimaryOrange</item>
         <item name="menu_colorPressed">@color/colorPrimaryDarkOrange</item>
+        <item name="colorButtonNormal">@color/colorPrimaryOrange</item>
     </style>
 
     <style name="AppThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -53,6 +55,7 @@
         <item name="fab_colorPressed">@color/colorPrimaryDarkBlue</item>
         <item name="menu_colorNormal">@color/colorPrimaryBlue</item>
         <item name="menu_colorPressed">@color/colorPrimaryDarkBlue</item>
+        <item name="colorButtonNormal">@color/colorPrimaryBlue</item>
     </style>
 
 
