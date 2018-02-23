@@ -1,5 +1,6 @@
 package com.example.batere3a.joggingpartner.notif;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,6 +29,7 @@ public class GCMListener extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        super.onMessageReceived(from, data);
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
@@ -50,8 +52,19 @@ public class GCMListener extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
-        // [END_EXCLUDE]
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, "")
+                .setContentTitle("You have new message")
+                .setContentText("You have a partner")
+                .setSmallIcon(R.drawable.ic_launcher_background);
+
+        Notification myNotif = notifyBuilder.build();
+        Log.d("gcmnotif manager", notificationManager.toString());
+        notificationManager.notify(0, myNotif);
+
+        //sendNotification(message);
+
     }
     // [END receive_message]
 

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.example.batere3a.joggingpartner.MainActivity;
 import com.example.batere3a.joggingpartner.R;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -237,6 +238,8 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
 
                     conn.disconnect();
 
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/" + dataId);
                     /////////////////////////////
                     JSONObject message = new JSONObject();
                     message.put("to", "/topics/" + dataId);
@@ -267,6 +270,8 @@ public class OrderDetails extends AppCompatActivity implements SensorEventListen
                     Log.d("message", json);
 
                     conn.disconnect();
+
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("/topics/" + dataId);
 
                 } catch (Exception e) {
                     Log.e("Error", "ERROR JSON EXCEPTION");

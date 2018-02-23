@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
+import com.example.batere3a.joggingpartner.notif.MyFirebaseMessageService;
 import com.example.batere3a.joggingpartner.order.OrderDetails;
 import com.example.batere3a.joggingpartner.pedometer.StepDetector;
 import com.example.batere3a.joggingpartner.pedometer.StepListener;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
 
+    // service
+    private MyFirebaseMessageService firebaseMessageService;
+    private Intent firebaseIntent;
+
     public void clearPreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
         mLogoutBtn = (Button) findViewById(R.id.buttonLogout);
         mMakeOrder = (Button) findViewById(R.id.buttonMakeOrder);
@@ -214,6 +220,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
         // fetch data and print it to screen
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+        firebaseMessageService = new MyFirebaseMessageService();
+        firebaseIntent = new Intent(this, firebaseMessageService.getClass());
+        startService(firebaseIntent);
     }
 
     @Override

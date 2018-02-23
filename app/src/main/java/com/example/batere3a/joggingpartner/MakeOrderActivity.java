@@ -123,6 +123,8 @@ public class MakeOrderActivity extends AppCompatActivity {
                 mAddressNameEditText.setText(mAddressName);
             }
         }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
     }
 
     /*
@@ -201,7 +203,7 @@ public class MakeOrderActivity extends AppCompatActivity {
 
                     // Make a topic with order ID
                     FirebaseMessaging.getInstance()
-                            .subscribeToTopic(orderId.getString("name"));
+                            .subscribeToTopic("/topics/" + orderId.getString("name"));
 
                     conn.disconnect();
                 } catch (Exception e) {
