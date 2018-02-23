@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
         
         // Set the text for each tab.
         tabLayout.addTab(tabLayout.newTab()
-                .setText(R.string.orders).setIcon(R.drawable.my_orders));
+                .setText("Your Appointments").setIcon(R.drawable.my_orders));
         tabLayout.addTab(tabLayout.newTab()
-                .setText(R.string.openorder).setIcon(R.drawable.openorder));
+                .setText("Appointments").setIcon(R.drawable.openorder));
         tabLayout.addTab(tabLayout.newTab()
                 .setText(R.string.history).setIcon(R.drawable.history));
         // Set the tabs to fill the entire layout.
