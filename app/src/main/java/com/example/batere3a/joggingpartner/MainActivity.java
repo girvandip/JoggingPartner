@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.batere3a.joggingpartner.database.FetchData;
 import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.example.batere3a.joggingpartner.pedometer.PedometerActivity;
+import com.example.batere3a.joggingpartner.pedometer.StepDetector;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -213,39 +214,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        
-        // Get an instance of the SensorManager
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
-
-        TvSteps = (TextView) findViewById(R.id.tv_steps);
-        Button BtnStart = (Button) findViewById(R.id.btn_start);
-        Button BtnStop = (Button) findViewById(R.id.btn_stop);
-        BtnStart.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                numSteps = 0;
-                sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
-            }
-        });
-
-
-        BtnStop.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                sensorManager.unregisterListener(MainActivity.this);
-            }
-        });
-        // fetch data and print it to screen
-
-//        TextView result = findViewById(R.id.result);
-//        FetchData users = new FetchData("Users", "GET", result);
-//        users.execute();
     }
 
     @Override
