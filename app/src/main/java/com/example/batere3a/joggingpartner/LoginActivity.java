@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batere3a.joggingpartner.database.FetchData;
+import com.example.batere3a.joggingpartner.models.ChangeTheme;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -93,19 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences sharedPref =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        String storedTheme = sharedPref.getString(SettingsActivity.KEY_PREF_THEME, "Green");
-        if(storedTheme.equals("Green")) {
-            setTheme(R.style.AppThemeGreen);
-        } else if(storedTheme.equals("Orange")) {
-            setTheme(R.style.AppThemeOrange);
-        } else {
-            setTheme(R.style.AppThemeBlue);
-        }
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        ChangeTheme theme = new ChangeTheme(this);
+        theme.change();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 

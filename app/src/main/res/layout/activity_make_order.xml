@@ -117,13 +117,12 @@
         <Button
             android:id="@+id/buttonMakeOrder"
             android:layout_below="@+id/layoutLocationText"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:elevation="10dp"
             android:text="@string/makeOrder"
-            android:onClick="saveOrderToDatabase"
-            android:background="@drawable/round_button"/>
+            android:onClick="saveOrderToDatabase"/>
     </RelativeLayout>
 </ScrollView>

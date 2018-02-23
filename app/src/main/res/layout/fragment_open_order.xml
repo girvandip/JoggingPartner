@@ -1,15 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.batere3a.joggingpartner.order.OpenOrder">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/open_order_recyclerview"
+        android:paddingTop="@dimen/margin_vertical"
+        android:paddingBottom="@dimen/margin_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginTop="@dimen/fragment_margin"
-        android:layout_marginLeft="@dimen/fragment_margin"
-        android:text="@string/openorder" />
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+</RelativeLayout>
