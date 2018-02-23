@@ -52,8 +52,8 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setupChannels(){
-        CharSequence adminChannelName = getString(R.string.notifications_admin_channel_name);
-        String adminChannelDescription = getString(R.string.notifications_admin_channel_description);
+        CharSequence adminChannelName = "";
+        String adminChannelDescription = "";
         NotificationChannel adminChannel; adminChannel = new NotificationChannel("ID",
                 adminChannelName, NotificationManager.IMPORTANCE_LOW);
         adminChannel.setDescription(adminChannelDescription);
