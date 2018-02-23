@@ -76,7 +76,8 @@ public class ProfileActivity extends AppCompatActivity {
         //Change theme according to prefererence
         ChangeTheme theme = new ChangeTheme(this);
         theme.change();
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
         //Access user Id
         final SharedPreferences sharedPref =
                 android.preference.PreferenceManager.getDefaultSharedPreferences(ProfileActivity.this);
@@ -93,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
         users.execute();
         String mPhone = "";
         String mNickname = "";
-        Log.d("result", result.getText().toString());
+        //Log.d("result", result.getText().toString());
         try {
             userData = users.get();
             JSONObject userJson = new JSONObject(userData);
@@ -103,9 +104,6 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
 
         //get current token
         String mUserId = sharedPref.getString("userId", "test");
