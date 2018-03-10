@@ -1,5 +1,3 @@
-# Tugas Android IF3111 - Pengembangan Aplikasi pada Platform Khusus
-
 # Jogging Partner
 
 ## Deskripsi Sistem
@@ -10,18 +8,8 @@
     2. Buka Android Studio dan lakukan open existing project pada folder hasil clone
     3. Lakukan sync project
     4. Run app pada device yang diinginkan
-
-## Cara Penggunaan Aplikasi
-    1. Lakukan instalasi aplikasi
-    2. Buka aplikasi dan lakukan sign in menggunakan akun email google
-    3. Gunakan fitur yang disediakan oleh aplikasi
-
-## Deliverables
-    Laporan : Batere3A_K01_LaporanAndroid.pdf di dalam uploader
     
 ## Anggota Tim
-    1. 13515051 - Girvandi Ilyas
-    2. 13515081 - Aldrich Valentino Halim
-    3. 13515103 - Aditya Pratama
-## Thanks To
-    Dosen : Muhammad Zuhri Catur Candra
+    1. Girvandi Ilyas (girvandip)
+    2. Aldrich Valentino Halim (aldrichvalentino)
+    3. Aditya Pratama (aditpratama)
